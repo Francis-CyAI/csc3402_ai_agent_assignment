@@ -5,6 +5,7 @@ checkers-game/
 │   │   │   ├── gameController.js          # Handles game-related logic
 │   │   │   └── moveController.js          # Validates and processes moves
 │   │   ├── models/
+|   |   |   |__ board (made of squares)     # Made of squares. Each square has unique id. Each square keeps occupations state. Each square keeps track of which piece occupies it.
 │   │   │   ├── game.js                     # Game state model
 │   │   │   ├── player.js                   # Player model
 │   │   │   └── piece.js                    # Piece model (including king logic)
