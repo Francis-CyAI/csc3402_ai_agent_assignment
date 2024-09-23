@@ -3,7 +3,7 @@ export default {
         '^.+\\.js$': 'babel-jest',
     },
     testEnvironment: 'node',
-    extensionsToTreatAsEsm: ['.js'],
+    extensionsToTreatAsEsm: [],
     globals: {
         'ts-jest': {
             useESM: true,
