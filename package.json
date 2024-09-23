@@ -7,9 +7,6 @@
   "scripts": {
     "test": "jest"
   },
-  "jest": {
-    "transform": {}
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
