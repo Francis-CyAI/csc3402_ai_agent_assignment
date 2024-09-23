@@ -3,8 +3,14 @@
 
 /* Pieces  */
 class Piece {
-    constructor(id){
+    /**
+     * 
+     * @param {*} id is the unique identifier of the piece
+     * @param {*} possibleDestinations is the array of ids of all possible destination squares
+     */
+    constructor(id, possibleDestinations){
         this.id = id
+        this.possibleDestinations = possibleDestinations
     }
 }
 

@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "csc3402_ai_agent_assignment": "file:",
     "express": "^4.21.0"
   },
   "devDependencies": {
