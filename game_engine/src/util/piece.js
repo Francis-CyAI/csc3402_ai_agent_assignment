@@ -12,5 +12,12 @@ function possibleDestinations(piece, currentPositionSquareId, gameState) {
      * after validating with the current game state.
      */
 
-    
+}
+
+function validPossibleDestinations(piece, possibleDestinations, gameState) {
+    /**
+     * This functions takes in a piece and all its possible destationations,
+     * then validates the possible destinations against the game state,
+     * and finally returns an array of all valid destinations for the piece.
+     */
 }
