@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 import Board from "@/ui-elements/board";
 
 export default function Home() {

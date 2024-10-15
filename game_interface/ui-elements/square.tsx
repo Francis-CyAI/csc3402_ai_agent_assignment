@@ -19,7 +19,7 @@ export default function Square(props: { id: string, color: string, onlick: Funct
     return (
         <div id={props.id} className={`${props.color} w-8 h-8 square`}
             onClick={() => {
-                props.onlick
+                props.onlick()
             }}
         >
             {piece}
