@@ -49,7 +49,7 @@ body {
   width: var(--square-dimension);
   height: var(--square-dimension);
   padding: 8px;
-  border: 1px solid white;
+  /* border: 1px solid white; */
 }
 
 .square-row {
@@ -71,4 +71,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.text-white {
+  color: white;
+}
+
+.text-black {
+  color: black;
 }

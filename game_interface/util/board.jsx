@@ -22,10 +22,11 @@ export function createBoardSquares(dimension , startColor ) {
     for (let i = 1; i <= dimension; i++) {
         let ithRow = []
         for (let j = 1; j <= dimension; j++) {
+            console.log("flag is ", flag)
             ithRow.push(
                 <Square 
                     id={`square-${sqrCount}`}
-                    color={colors[flag]}
+                    color={colors[Number(flag)]}
                     onlick={() => {
                         alert(`square-${sqrCount} just got clicked`)
                     }}
@@ -34,16 +35,18 @@ export function createBoardSquares(dimension , startColor ) {
                             occupied: true,
                             piece: {
                                 type: "man",
-                                color: colors[!flag]
+                                color: colors[Number(!flag)]
                             }
                         }
                     }
                 />
             )
             flag = !flag
+            console.log("flag is now ", flag)
             sqrCount++
         }
-        boardSquareMatrix.push(ithRow)        
+        boardSquareMatrix.push(ithRow) 
+        flag = !flag       
     }
 
     return boardSquareMatrix
