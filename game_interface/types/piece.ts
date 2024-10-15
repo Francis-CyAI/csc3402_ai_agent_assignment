@@ -1,6 +1,6 @@
-type Piece = {
+type PieceType = {
     type: "man" | "king"
     color: string
 }
 
-export default Piece
+export default PieceType

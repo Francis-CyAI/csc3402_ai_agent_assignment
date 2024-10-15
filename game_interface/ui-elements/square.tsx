@@ -2,6 +2,7 @@
 
 import { SquareState } from "@/types/state";
 import { useState } from "react";
+import PieceType from "@/types/piece";
 
 export default function Square(props: { id: string, color: string, onlick: Function, initialState: SquareState}) {
     let [state, setState] = useState(props.initialState)

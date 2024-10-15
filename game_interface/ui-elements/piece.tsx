@@ -1,6 +1,6 @@
-import Piece from "@/types/piece";
+import PieceType from "@/types/piece";
 
-export default function piece(props: { info: Piece}) {
+export default function Piece(props: { info: PieceType}) {
     let title = props.info.type == "man" ? "man" : "king"
     return (
         <div className={`rounded piece ${props.info.color}`}>
