@@ -52,6 +52,10 @@ body {
   border: 1px solid white;
 }
 
+.square-row {
+  display: flex;
+}
+
 .piece {
   width: var(--piece-dimesion);
   height: var(--piece-dimesion);
