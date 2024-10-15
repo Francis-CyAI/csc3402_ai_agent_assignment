@@ -5,4 +5,4 @@ echo Starting interface...
 echo
 cd game_interface
 cls
-npm run dev
+npm run dev'
