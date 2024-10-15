@@ -1,0 +1,1 @@
+const squareDimension = 50;
