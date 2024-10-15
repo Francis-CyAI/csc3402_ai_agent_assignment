@@ -25,3 +25,19 @@ body {
     text-wrap: balance;
   }
 }
+
+:root {
+  --square-dimension: 50px;
+  --piece-dimesion: var(--square-dimension) - 10;
+}
+
+.square {
+  width: var(--square-dimension);
+  height: var(--square-dimension);
+}
+
+.piece {
+  width: var(--piece-dimesion);
+  height: var(--piece-dimesion);
+  border-radius: var(--piece-dimesion);;
+}

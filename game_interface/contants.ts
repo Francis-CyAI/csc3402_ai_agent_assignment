@@ -1,1 +1,1 @@
-const squareDimension = 50;
+export const squareDimension = 50;
