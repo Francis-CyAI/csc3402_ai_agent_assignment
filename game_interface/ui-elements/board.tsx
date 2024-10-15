@@ -4,10 +4,10 @@ import Square from "./square"
 
 export default function Board() {
     return (
-        <div>
+        <div className="board">
             <Square 
                 id="sqr-1"
-                color="bg-white"
+                color="white"
                 onlick={() => {
                     alert("Square just got clicked")
                 }}
@@ -16,7 +16,7 @@ export default function Board() {
                         occupied: true,
                         piece: {
                             type: "man",
-                            color: "bg-black" // tailwind style
+                            color: "black" // tailwind style
                         }
                     }
                 }

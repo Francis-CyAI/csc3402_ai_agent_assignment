@@ -27,17 +27,44 @@ body {
 }
 
 :root {
-  --square-dimension: 50px;
-  --piece-dimesion: var(--square-dimension) - 10;
+  --square-dimension: 80px;
+  --piece-dimesion: 60px;
+}
+
+
+/* Color classes */
+.white {
+  background-color: white;
+}
+
+.black {
+  background-color: black;
+}
+
+.board {
+  padding: 16px;
 }
 
 .square {
   width: var(--square-dimension);
   height: var(--square-dimension);
+  padding: 8px;
+  border: 1px solid white;
 }
 
 .piece {
   width: var(--piece-dimesion);
   height: var(--piece-dimesion);
-  border-radius: var(--piece-dimesion);;
+  border-radius: var(--piece-dimesion);
+  padding: 8px;
+}
+.piece-title {
+  width: fit-content;
+  height: fit-content;
+}
+
+.square, .piece, .piece-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
