@@ -7,68 +7,75 @@ import state from "src/controllers/state.js";
 //import exportservice from "src/controllers/exportservice.js";
 
 class Checkers {
-	var #piecesWhite = 20;
-	var #piecesBlack = 20;
-	var #turn = "white";
-	var #kingMoves = 25;
-	var #piecesSquarePairingBlack = new Map((function () {
+    #piecesWhite;
+	#piecesBlack;
+	#turn;
+	#kingMoves;
+	#piecesSquarePairingBlack;
+	#piecesSquarePairingWhite;
+    
+    constructor() {
+	this.#piecesWhite = 20;
+	this.#piecesBlack = 20;
+	this.#turn = "white";
+	this.#kingMoves = 25;
+	this.#piecesSquarePairingBlack = new Map((function () {
 			let pairing = [];
 			let pieceId = 1;
 			let squareId = 2;
-			let onNextLine = "add_one";
-			for (let i = 0; i <= 20; i = i + 1) {
+			let onNextLine = 1;
+			for (let i = 0; i <= 3; i = i + 1) {
 				for (let j = 0; j <= 4; j = j + 1) {
 					pairing.push([pieceId, [squareId ,0 ]]);
 					pieceId = pieceId + 1;
-					squareId = squareId + 2;
+                    if (j === 4) {
+                        squareId = squareId + onNextLine;
+                    } else {
+    					squareId = squareId + 2;
+                    }
 				}
-				if (onNextLine === "add_one") {
-					squareId = squareId + 1;
-					atNextLine = "add_three"
-				} else {
-					squareId = squareId + 3;
-					atNextLine = "add_one";
-				}
+				if (onNextLine === 1) {
+					onNextLine = 3;
+				} else if (onNextLine === 3) {
+                    onNextLine = 1;
+                }
 			}
 			return pairing;
 		})()
 	);
-	var #piecesSquarePairingWhite = new Map((function () {
+	this.#piecesSquarePairingWhite = new Map((function () {
 			let pairing = [];
 			let pieceId = 21;
 			let squareId = 62;
-			let onNextLine = "add_one";
-			for (let i = 0; i <= 20; i = i + 1) {
+			let onNextLine = 1;
+			for (let i = 0; i <= 3; i = i + 1) {
 				for (let j = 0; j <= 4; j = j + 1) {
 					pairing.push([pieceId, [squareId ,0 ]]);
 					pieceId = pieceId + 1;
-					squareId = squareId + 2;
+                    if (j === 4) {
+                        squareId = squareId + onNextLine;
+                    } else {
+    					squareId = squareId + 2;
+                    }
 				}
-				if (onNextLine === "add_one") {
-					squareId = squareId + 1;
-					atNextLine = "add_three"
-				} else {
-					squareId = squareId + 3;
-					atNextLine = "add_one";
-				}
+				if (onNextLine === 1) {
+					onNextLine = 3;
+				} else if (onNextLine === 3) {
+                    onNextLine = 1;
+                }
 			}
 			return pairing;
 		})()
 	);
-
-	/**
-	constructor() {
-		
-	}
-   */
+    }
 
 	get piecesBlack () {
 		return this.#piecesBlack;
 	}
 	
-	set piecesBlack (value) {
-		if (value === -1) {
-			this.#piecesBlack = this.#piecesBlack + value;
+	set piecesBlack (n) {
+		if (n === -1) {
+			this.#piecesBlack = this.#piecesBlack + n;
 		}
 	}
 	
@@ -76,9 +83,9 @@ class Checkers {
 		return this.#piecesWhite;
 	}
 	
-	set piecesWhite (value) {
-		if (value === -1) {
-			this.#piecesWhite = this.#piecesWhite + value;
+	set piecesWhite (n) {
+		if (n === -1) {
+			this.#piecesWhite = this.#piecesWhite + n;
 		}
 	}
 	
@@ -86,21 +93,21 @@ class Checkers {
 		return this.#turn;
 	}
 	
-	set turn (value) {
-		if (this._turn === "white" && value === "black") {
-			this._turn = "black";
-		} else if (this._turn === "black" && value === "white") {
-			this._turn = "white";
+	set turn (n) {
+		if (this.#turn === "white" && n === "black") {
+			this.#turn = "black";
+		} else if (this.#turn === "black" && n === "white") {
+			this.#turn = "white";
 		} 
 	}
 
 	get kingMoves () {
-		return this._kingMoves;
+		return this.#kingMoves;
 	}
 	
-	set piecesBlack (value) {
-		if (value === -1) {
-			this._kingMoves = this._kingMoves + value;
+	set kingMoves (n) {
+		if (n === -1) {
+			this.#kingMoves = this.#kingMoves + n;
 		}
 	}
 
@@ -110,19 +117,19 @@ class Checkers {
 	
 	setPieceBlackKing (pieceId) {
 		if (pieceId > 0 && pieceId < 21) {
-			let pieceArray = #piecesSquarePairingBlack.get(pieceId);
+			let pieceArray = this.#piecesSquarePairingBlack.get(pieceId);
 			if (pieceArray[1] === 0) {
 				pieceArray[1] = 1;
-				#piecesSquarePairingBlack.set(pieceId, pieceArray);
+				this.#piecesSquarePairingBlack.set(pieceId, pieceArray);
 			}
 		}
 	}
 	
 	setPieceBlackSquare (pieceId, squareId) {
 		if ((pieceId > 0 && pieceId < 21) && (squareId > 0 && squareId < 100)) {
-			let pieceArray = #piecesSquarePairingBlack.get(pieceId);
+			let pieceArray = this.#piecesSquarePairingBlack.get(pieceId);
 			pieceArray[0] = squareId;
-			#piecesSquarePairingBlack.set(pieceId, pieceArray);
+			this.#piecesSquarePairingBlack.set(pieceId, pieceArray);
 		}
 	}
 	
@@ -133,20 +140,19 @@ class Checkers {
 	
 	setPieceWhiteKing (pieceId) {
 		if (pieceId > 20 && pieceId < 41) {
-			let pieceArray = #piecesSquarePairingWhite.get(pieceId);
+			let pieceArray = this.#piecesSquarePairingWhite.get(pieceId);
 			if (pieceArray[1] === 0) {
 				pieceArray[1] = 1;
-				#piecesSquarePairingWhite.set(pieceId, pieceArray);
+				this.#piecesSquarePairingWhite.set(pieceId, pieceArray);
 			}
 		}
 	}
 	
 	setPieceWhiteSquare (pieceId, squareId) {
 		if ((pieceId > 20 && pieceId < 41) && (squareId > 0 && squareId < 100)) {
-			let pieceArray = #piecesSquarePairingWhite.get(pieceId);
+			let pieceArray = this.#piecesSquarePairingWhite.get(pieceId);
 			pieceArray[0] = squareId;
-			#piecesSquarePairingWhite.set(pieceId, pieceArray);
+			this.#piecesSquarePairingWhite.set(pieceId, pieceArray);
 		}
 	}
-	
 }
