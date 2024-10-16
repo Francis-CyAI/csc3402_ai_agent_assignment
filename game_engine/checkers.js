@@ -7,7 +7,7 @@ import state from "src/controllers/state.js";
 //import exportservice from "src/controllers/exportservice.js";
 
 class Checkers {
-   #piecesWhite;
+    #piecesWhite;
 	#piecesBlack;
 	#turn;
 	#kingMoves;
@@ -69,19 +69,13 @@ class Checkers {
 	);
     }
 
-    /**
-	constructor() {
-		
-	}
-    */
-
 	get piecesBlack () {
 		return this.#piecesBlack;
 	}
 	
-	set piecesBlack (value) {
-		if (value === -1) {
-			this.#piecesBlack = this.#piecesBlack + value;
+	set piecesBlack (n) {
+		if (n === -1) {
+			this.#piecesBlack = this.#piecesBlack + n;
 		}
 	}
 	
@@ -89,9 +83,9 @@ class Checkers {
 		return this.#piecesWhite;
 	}
 	
-	set piecesWhite (value) {
-		if (value === -1) {
-			this.#piecesWhite = this.#piecesWhite + value;
+	set piecesWhite (n) {
+		if (n === -1) {
+			this.#piecesWhite = this.#piecesWhite + n;
 		}
 	}
 	
@@ -99,10 +93,10 @@ class Checkers {
 		return this.#turn;
 	}
 	
-	set turn (value) {
-		if (this.#turn === "white" && value === "black") {
+	set turn (n) {
+		if (this.#turn === "white" && n === "black") {
 			this.#turn = "black";
-		} else if (this.#turn === "black" && value === "white") {
+		} else if (this.#turn === "black" && n === "white") {
 			this.#turn = "white";
 		} 
 	}
@@ -111,9 +105,9 @@ class Checkers {
 		return this.#kingMoves;
 	}
 	
-	set piecesBlack (value) {
-		if (value === -1) {
-			this.#kingMoves = this.#kingMoves + value;
+	set kingMoves (n) {
+		if (n === -1) {
+			this.#kingMoves = this.#kingMoves + n;
 		}
 	}
 
@@ -161,5 +155,4 @@ class Checkers {
 			this.#piecesSquarePairingWhite.set(pieceId, pieceArray);
 		}
 	}
-	
 }
