@@ -3,8 +3,9 @@ import { sqrColor1, sqrColor2, boardSquareConfigCount, pieceColor1, pieceColor2 
 import { partialInitialBoardState } from "@/state/board_state"
 import SquareType from "@/types/square_type"
 import PieceType from "@/types/piece_type"
+import { BoardStateType } from "@/types/board_state_type"
 
-function generateInitialBoardState() {
+export function generateInitialBoardState(): BoardStateType {
     let first = 0
     let last = boardSquareConfigCount - 1
 
@@ -43,6 +44,7 @@ function generateInitialBoardState() {
     return boardState
 }
 
+/*
 export function createBoardSquares(dimension: number, startColor: string) {
     let colors = {
         1: startColor,
@@ -93,4 +95,47 @@ export function createBoardSquares(dimension: number, startColor: string) {
     }
 
     return boardSquareMatrix
+}
+*/
+
+export function generateBoardMatrix() {
+    let initialBoardState = generateInitialBoardState()
+
+    // TODO: remove
+    console.log("\n\nInitial Board state is \n", initialBoardState, "\n\n")
+
+    let first = 0
+    let last = initialBoardState.length - 1
+
+    let idCount = 0
+
+    let colors = {
+        1: sqrColor1,
+        0: sqrColor2
+    }
+
+    let boardMatrix = []
+
+
+    for (let row = first; row <= last; row++) {
+        let squareRow = []
+
+        for (let col = first; col <= last; col++) {
+            let squareState: SquareType = initialBoardState[row][col]
+            idCount++
+            squareRow.push(
+                <Square
+                    id={`square-${idCount}`}
+                    key={idCount}
+                    color={colors[Number(squareState.playable)]}
+                    onlick={() => {
+                        `square-${idCount} got clicked`
+                    }}
+                    initialState={squareState}
+                />
+            )
+        }
+        boardMatrix.push(squareRow)
+    }
+    return boardMatrix
 }

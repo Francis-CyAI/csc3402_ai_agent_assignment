@@ -1,7 +1,9 @@
 import Piece from "./piece_type"
 
-export default interface SquareType {
+interface SquareType {
     playable: boolean,
     occupied?: boolean,
     piece?: Piece
 }
+
+export default SquareType

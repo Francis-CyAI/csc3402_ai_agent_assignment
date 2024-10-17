@@ -1,6 +1,6 @@
 'use client'
 
-import { SquareType } from "@/types/square_type";
+import SquareType from "@/types/square_type";
 import { useState } from "react";
 // import PieceType from "@/types/piece";
 import Piece from "./piece";
