@@ -6,13 +6,13 @@
  * This is the initial board state
  */
 
-import { SquareType } from "@/types/square_type"
 import { BoardStateType } from "@/types/board_state_type"
-import { sqrColor1, sqrColor2 } from "@/contants"
+import { pieceColor1, pieceColor2 } from "@/contants"
 
 export let partialInitialBoardState: BoardStateType = [
     [
-        { playable: false }, { playable: true, occupied: true, piece: { type: "man", color: sqrColor1 } }
+        { playable: false }, 
+        { playable: true, occupied: true, piece: { type: "man", color: pieceColor1 } }
     ],
     [],
     [],
@@ -22,5 +22,8 @@ export let partialInitialBoardState: BoardStateType = [
     [],
     [],
     [],
-    [],
+    [
+        { playable: true, occupied: true, piece: { type: "man", color: pieceColor2 } },
+        { playable: false }
+    ],
 ]
