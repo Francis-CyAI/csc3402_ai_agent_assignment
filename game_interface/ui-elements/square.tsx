@@ -5,8 +5,11 @@ import { useState } from "react";
 // import PieceType from "@/types/piece";
 import Piece from "./piece";
 
-export default function Square(props: { id: string, color: string, onlick: Function, initialState: SquareState}) {
+export default function Square(props: { id: string, color: string, onlick: Function, initialState: SquareState, key: number}) {
     let [state, setState] = useState(props.initialState)
+    if (props.key == null) {
+        props.key = 0
+    }
 
     /*
     let pieceInfo: PieceType = {
@@ -17,7 +20,7 @@ export default function Square(props: { id: string, color: string, onlick: Funct
     let piece = props.initialState.occupied ? <Piece info={props.initialState.piece} /> : <></>;
 
     return (
-        <div id={props.id} className={`${props.color} w-8 h-8 square`}
+        <div key={props.key} id={props.id} className={`${props.color} w-8 h-8 square`}
             onClick={() => {
                 props.onlick()
             }}

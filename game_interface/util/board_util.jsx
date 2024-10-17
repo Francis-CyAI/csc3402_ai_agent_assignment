@@ -25,6 +25,7 @@ export function createBoardSquares(dimension , startColor ) {
             console.log("flag is ", flag)
             ithRow.push(
                 <Square 
+                    key={i*j}
                     id={`square-${sqrCount}`}
                     color={colors[Number(flag)]}
                     onlick={() => {
