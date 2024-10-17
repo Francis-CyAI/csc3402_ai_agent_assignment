@@ -36,10 +36,16 @@ body {
 .white {
   background-color: white;
 }
-
 .black {
   background-color: black;
 }
+.grey {
+  background-attachment: grey;
+}
+.blue {
+  background-attachment: blue;
+}
+
 
 .board {
   padding: 16px;
