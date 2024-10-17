@@ -1,6 +1,8 @@
 import Square from "../ui-elements/square"
 import { sqrColor1, sqrColor2 } from "@/contants"
 
+function generateInitialBoardState() {}
+
 export function createBoardSquares(dimension , startColor ) {
     let colors = {
         1: startColor,
