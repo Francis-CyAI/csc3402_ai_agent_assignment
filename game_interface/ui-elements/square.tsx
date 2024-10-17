@@ -7,8 +7,9 @@ import Piece from "./piece";
 
 export default function Square(props: { id: string, color: string, onlick: Function, initialState: SquareState, key: number}) {
     let [state, setState] = useState(props.initialState)
+    let key = 0
     if (props.key == null) {
-        props.key = 0
+        key = props.key
     }
 
     /*
