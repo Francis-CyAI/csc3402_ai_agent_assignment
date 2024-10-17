@@ -1,5 +1,5 @@
 type PieceType = {
-    id?: string
+    // id?: string
     type: "man" | "king"
     color: string
 }

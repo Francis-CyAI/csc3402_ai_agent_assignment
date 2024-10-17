@@ -45,6 +45,22 @@ body {
   padding: 16px;
 }
 
+.screen-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.message-span {
+  padding: 4px;
+  border: 1px solid white;
+  margin-right: 24px;
+  padding-right: 24px;
+}
+.controls-span {
+  margin-left: 24px;
+}
+
+
 .square {
   width: var(--square-dimension);
   height: var(--square-dimension);
