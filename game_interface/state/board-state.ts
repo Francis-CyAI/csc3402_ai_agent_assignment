@@ -6,7 +6,7 @@
  * This is the initial board state
  */
 
-import { SquareType } from "@/types/square"
+import { SquareType } from "@/types/square_type"
 
 export type BoardType = [ //  whole: column
     SquareType[], // row. Max length = 10

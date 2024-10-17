@@ -1,4 +1,4 @@
-import Piece from "./piece"
+import Piece from "./piece_type"
 
 export interface SquareType {
     playable: boolean,
