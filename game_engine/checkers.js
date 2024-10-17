@@ -217,6 +217,32 @@ piece (pieceId) {
 
 }
 
+move (squareId01, squareId02) {
+	if (square.occupantType(squareId01) === manBlack) {
+		var pairing = getPiecesSquarePairingBlack(squareId01);
+		if ((pairing[0] + 9) === squareId02) {
+			if (square.occupantType(squareId02) === "none") {
+				setPieceBlackSquare(square.occupantId(squareId01), squareId02);
+			}
+		} else if ((pairing[0] + 11) === squareId02) {
+			if (square.occupantType(squareId02) === "none") {
+				setPieceBlackSquare(square.occupantId(squareId01), squareId02);
+			}
+		}
+	} else if (square.occupantType(squareId01) === manWhite) {
+		var pairing = getPiecesSquarePairingWhite(squareId01);
+		if ((pairing[0] + 9) === squareId02) {
+			if (square.occupantType(squareId02) === "none") {
+				setPieceWhiteSquare(square.occupantId(squareId01), squareId02);
+			}
+		} else if ((pairing[0] + 11) === squareId02) {
+			if (square.occupantType(squareId02) === "none") {
+				setPieceWhiteSquare(square.occupantId(squareId01), squareId02);
+			}
+		}
+	}
+}
+
 playing () {
 	function hasMoves() {
 		var has = false;
@@ -283,7 +309,7 @@ square (squareId) {
 				}
 			}
 		}
-		return none;
+		return "none";
 	}
 }
 
