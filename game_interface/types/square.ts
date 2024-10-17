@@ -1,6 +1,7 @@
 import Piece from "./piece"
 
-export interface SquareState {
+export interface SquareType {
+    playable: boolean,
     occupied: boolean,
     piece: Piece
 }

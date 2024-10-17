@@ -1,11 +1,11 @@
 'use client'
 
-import { SquareState } from "@/types/state";
+import { SquareType } from "@/types/square";
 import { useState } from "react";
 // import PieceType from "@/types/piece";
 import Piece from "./piece";
 
-export default function Square(props: { id: string, color: string, onlick: Function, initialState: SquareState, key: number}) {
+export default function Square(props: { id: string, color: string, onlick: Function, initialState: SquareType, key: number}) {
     let [state, setState] = useState(props.initialState)
     let key = 0
     if (props.key == null) {
