@@ -8,21 +8,20 @@ import { BoardStateType } from "@/types/board_state_type"
 
 export function generateInitialBoardState(): BoardStateType {
     let first = 0
-    let second = 1
     let last = boardSquareConfigCount - 1
 
-    let boardState = partialInitialBoardState
-
-    // console.log("\n\nPatial board state is ", boardState, "\n\n")
+    // Create a deep copy of the partialInitialBoardState
+    let boardState = partialInitialBoardState.map(row => row.map(square => ({ ...square })))
 
     let currentSquarePlayable = !boardState[first][first].playable
 
     for (let row = first; row <= last; row++) {
         let currentRow = boardState[row]
         for (let col = first; col <= last; col++) {
-            if ((row == first) && col == first) {
+            if (row === first && col === first) {
                 continue
             }
+
             let square: SquareType = { playable: currentSquarePlayable }
 
             if (currentSquarePlayable) {
@@ -30,23 +29,28 @@ export function generateInitialBoardState(): BoardStateType {
                     type: "man",
                     color: pieceColor1
                 }
+
                 square.playable = true
+
                 if (row < 3 || row > last - 3) {
                     square.occupied = true
                     if (row > last - 3) {
                         piece.color = pieceColor2
                     }
                 }
+
                 if (square.occupied) {
                     square.piece = piece
                 }
             }
+
             currentRow[col] = square
             currentSquarePlayable = !currentSquarePlayable
         }
         currentSquarePlayable = !currentSquarePlayable
     }
-    return boardState
+
+    return boardState as BoardStateType
 }
 
 /*
