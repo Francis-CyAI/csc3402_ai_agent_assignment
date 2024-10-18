@@ -1,17 +1,21 @@
 'use client'
 
-import ScreenHeader from "./screen_header";
-import { generateBoardMatrix } from "@/util/board_util";
-import { sqrColor2 } from "@/contants";
-import { BoardStateType } from "@/types/board_state_type";
-import Square from "./square";
+// import ScreenHeader from "./screen_header";
+import { generateBoardElementMatrix } from "@/util/board_util";
+// import { sqrColor2 } from "@/contants";
+// import { BoardStateType } from "@/types/board_state_type";
+// import Square from "./square";
+import { useSelector } from "react-redux";
 
 export default function Board() {
+    const boardState = useSelector(state => state.board.current)
+    console.log("\n\nCurrent state from board element: ", boardState, "\n\n")
+
     return (
         <div className="board">
             
             {
-               generateBoardMatrix().map((sqrRow, index) => (
+               generateBoardElementMatrix().map((sqrRow, index) => (
                 <div key={index} className="square-row">
                     {
                         sqrRow.map((sqr) => (

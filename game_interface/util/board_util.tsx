@@ -5,6 +5,7 @@ import SquareType from "@/types/square_type"
 import PieceType from "@/types/piece_type"
 import { BoardStateType } from "@/types/board_state_type"
 
+
 export function generateInitialBoardState(): BoardStateType {
     let first = 0
     let second = 1
@@ -12,7 +13,7 @@ export function generateInitialBoardState(): BoardStateType {
 
     let boardState = partialInitialBoardState
 
-    console.log("\n\nPatial board state is ", boardState, "\n\n")
+    // console.log("\n\nPatial board state is ", boardState, "\n\n")
 
     let currentSquarePlayable = !boardState[first][first].playable
 
@@ -104,9 +105,6 @@ export function createBoardSquares(dimension: number, startColor: string) {
 
 export function generateBoardElementMatrix() {
     let initialBoardState = generateInitialBoardState()
-
-    // TODO: remove
-    console.log("\n\nInitial Board state is \n", initialBoardState, "\n\n")
 
     let first = 0
     let last = initialBoardState.length - 1
