@@ -1,7 +1,7 @@
 export const squareDimension = 50;
 
-export const sqrColor1 = "white"
-export const sqrColor2 = "black"
+export const sqrColor1 = "black"
+export const sqrColor2 = "white"
 
 export const pieceColor1 = "grey"
 export const pieceColor2 = "blue"
