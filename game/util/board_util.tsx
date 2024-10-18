@@ -4,6 +4,7 @@ import { partialInitialBoardState } from "@/state/board_state"
 import SquareType from "@/types/square_type"
 import PieceType from "@/types/piece_type"
 import { BoardStateType } from "@/types/board_state_type"
+import { ReplaceUpdateBoardSate } from "./board_state_util"
 
 
 export function generateInitialBoardState(): BoardStateType {
@@ -133,7 +134,7 @@ export function generateBoardElementMatrix(initialBoardState: BoardStateType) {
                     key={idCount}
                     color={colors[Number(squareState.playable)]}
                     onlick={() => {
-                        `square-${idCount} got clicked`
+                        alert(`Now replacing board state.`)
                     }}
                     initialState={squareState}
                 />
