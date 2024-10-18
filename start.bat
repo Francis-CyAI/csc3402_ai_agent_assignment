@@ -3,6 +3,6 @@ echo Starting engine...
 echo
 echo Starting interface...
 echo
-cd game_interface
+cd game
 cls
 npm run dev

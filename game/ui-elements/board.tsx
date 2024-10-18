@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 
 export default function Board() {
     const boardState = useSelector(state => state.board.current)
-    // console.log("\n\nCurrent state from board element: ", boardState, "\n\n")
+    console.log("\n\nCurrent state from board element: ", boardState, "\n\n")
 
     return (
         <div className="board">
