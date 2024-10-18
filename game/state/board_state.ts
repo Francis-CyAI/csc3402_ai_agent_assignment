@@ -11,8 +11,8 @@ import { pieceColor1, pieceColor2 } from "@/contants"
 
 export let partialInitialBoardState: BoardStateType = [
     [
-        { playable: false }, 
-        { playable: true, occupied: true, piece: { type: "man", color: pieceColor1 } }
+        { coordinates: [0, 0], playable: false }, 
+        { coordinates: [0, 1],  playable: true, occupied: true, piece: { type: "man", color: pieceColor1 } }
     ],
     [],
     [],
@@ -23,7 +23,7 @@ export let partialInitialBoardState: BoardStateType = [
     [],
     [],
     [
-        { playable: true, occupied: true, piece: { type: "man", color: pieceColor2 } },
-        { playable: false }
+        { coordinates: [9, 0], playable: true, occupied: true, piece: { type: "man", color: pieceColor2 } },
+        { coordinates: [9, 1], playable: false }
     ],
 ]

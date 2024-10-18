@@ -1,3 +1,6 @@
+// TODO: delete file
+
+
 import { useSelector, useDispatch } from "react-redux";
 import { updateBoard } from "@/redux/boardSlice";
 import { BoardStateType } from "@/types/board_state_type";

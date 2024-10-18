@@ -23,7 +23,7 @@ export function generateInitialBoardState(): BoardStateType {
                 continue
             }
 
-            let square: SquareType = { playable: currentSquarePlayable }
+            let square: SquareType = { coordinates: [row, col], playable: currentSquarePlayable }
 
             if (currentSquarePlayable) {
                 let piece: PieceType = {
