@@ -102,7 +102,7 @@ export function createBoardSquares(dimension: number, startColor: string) {
 }
 */
 
-export function generateBoardMatrix() {
+export function generateBoardElementMatrix() {
     let initialBoardState = generateInitialBoardState()
 
     // TODO: remove
