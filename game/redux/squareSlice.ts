@@ -17,16 +17,22 @@ const squareSlice = createSlice({
         updateToSquare(state, action: PayloadAction<[number, number]>) {
             state.toSquare = action.payload; // Replace toSquare with new array
         },
-        fromSquareSelected(state, action) {
+        fromSquareSelected(state) {
             state. fromSquareSelected = true
         },
-        toSquareSelected(state, action) {
+        toSquareSelected(state) {
             state.toSquareSelected = true
         },
-        fromSquareDeselected(state, action) {
+        fromSquareDeselected(state) {
             state.fromSquareSelected = false
         },
-        toSquareDeselected(state, action) {
+        toSquareDeselected(state) {
+            state.toSquareSelected = false
+        },
+        clear(state) {
+            state.fromSquare = [-1, -1]
+            state.toSquare = [-1, -1]
+            state.fromSquareSelected = false
             state.toSquareSelected = false
         }
     },
@@ -38,7 +44,8 @@ export const {
     fromSquareSelected,
     fromSquareDeselected,
     toSquareSelected,
-    toSquareDeselected 
+    toSquareDeselected,
+    clear 
 } = squareSlice.actions;
 
 export default squareSlice.reducer;
