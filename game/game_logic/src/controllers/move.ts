@@ -5,9 +5,3 @@
  * the piece to it, from the plauable occupied square.
  */
 
-import { useSelector } from "react-redux";
-import { BoardStateType } from "@/types/board_state_type";
-
-export function move() {
-    let currentBoardState: BoardStateType = useSelector(state => state.board.current)
-}
