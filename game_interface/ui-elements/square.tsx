@@ -13,12 +13,6 @@ export default function Square(props: { id: string, color: string, onlick: Funct
         key = props.key
     }
 
-    /*
-    let pieceInfo: PieceType = {
-        type: "man",
-        color: "grey" // tailwind style
-    }*/
-
     let pieceInfo: PieceType = props.initialState.piece as PieceType
 
     let piece = props.initialState.occupied ? <Piece info={pieceInfo} /> : <></>;
