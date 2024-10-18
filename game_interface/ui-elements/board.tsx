@@ -9,13 +9,13 @@ import { useSelector } from "react-redux";
 
 export default function Board() {
     const boardState = useSelector(state => state.board.current)
-    console.log("\n\nCurrent state from board element: ", boardState, "\n\n")
+    // console.log("\n\nCurrent state from board element: ", boardState, "\n\n")
 
     return (
         <div className="board">
             
             {
-               generateBoardElementMatrix().map((sqrRow, index) => (
+               generateBoardElementMatrix(boardState).map((sqrRow, index) => (
                 <div key={index} className="square-row">
                     {
                         sqrRow.map((sqr) => (
