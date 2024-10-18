@@ -7,20 +7,22 @@ import { BoardStateType } from "@/types/board_state_type"
 
 export function generateInitialBoardState(): BoardStateType {
     let first = 0
+    let second = 1
     let last = boardSquareConfigCount - 1
 
     let boardState = partialInitialBoardState
 
-    let previousSquarePlayable = boardState[first][first].playable
+    console.log("\n\nPatial board state is ", boardState, "\n\n")
+
+    let currentSquarePlayable = !boardState[first][first].playable
 
     for (let row = first; row <= last; row++) {
         let currentRow = boardState[row]
         for (let col = first; col <= last; col++) {
-            if ((row == first || row == last) && col == first) {
+            if ((row == first) && col == first) {
                 continue
             }
-            let currentSquarePlayable = !previousSquarePlayable
-            let square: SquareType = { playable: false }
+            let square: SquareType = { playable: currentSquarePlayable }
 
             if (currentSquarePlayable) {
                 let piece: PieceType = {
@@ -39,7 +41,9 @@ export function generateInitialBoardState(): BoardStateType {
                 }
             }
             currentRow[col] = square
+            currentSquarePlayable = !currentSquarePlayable
         }
+        currentSquarePlayable = !currentSquarePlayable
     }
     return boardState
 }
