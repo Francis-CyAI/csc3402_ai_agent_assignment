@@ -39,7 +39,7 @@ class Checkers {
 	             }
 			}
 			return pairing;
-			})()
+		})()
 		);
 		this.#piecesSquarePairingWhite = new Map((function () {
 			let pairing = [];
@@ -63,7 +63,7 @@ class Checkers {
 	             }
 			}
 			return pairing;
-			})()
+		})()
 		);
 	}
 	//XXX: END OF => Contructor
@@ -126,7 +126,28 @@ class Checkers {
 	}
 	
 	setPieceBlackSquare (pieceId, squareId) {
-		if ((pieceId > 0 && pieceId < 21) && (squareId > 0 && squareId < 100)) {
+		var playableSquares = (function () {
+			let catchArray = [];
+			let squareId = 2;
+			let onNextLine = 1;
+			for (let i = 0; i <= 9; i = i + 1) {
+				for (let j = 0; j <= 4; j = j + 1) {
+					catchArray.push(squareId);
+					if (j === 4) {
+						squareId = squareId + onNextLine;
+					} else {
+						squareId = squareId + 2;
+					}
+				}
+				if (onNextLine === 1) {
+					onNextLine = 3;
+				} else if (onNextLine === 3) {
+	                 onNextLine = 1;
+	             }
+			}
+			return catchArray;
+		})();
+		if ((pieceId > 0 && pieceId < 21) && (playableSquares.includes(squareId))) {
 			let pieceArray = this.#piecesSquarePairingBlack.get(pieceId);
 			pieceArray[0] = squareId;
 			this.#piecesSquarePairingBlack.set(pieceId, pieceArray);
@@ -149,7 +170,28 @@ class Checkers {
 	}
 	
 	setPieceWhiteSquare (pieceId, squareId) {
-		if ((pieceId > 20 && pieceId < 41) && (squareId > 0 && squareId < 100)) {
+		var playableSquares = (function () {
+			let catchArray = [];
+			let squareId = 2;
+			let onNextLine = 1;
+			for (let i = 0; i <= 9; i = i + 1) {
+				for (let j = 0; j <= 4; j = j + 1) {
+					catchArray.push(squareId);
+					if (j === 4) {
+						squareId = squareId + onNextLine;
+					} else {
+						squareId = squareId + 2;
+					}
+				}
+				if (onNextLine === 1) {
+					onNextLine = 3;
+				} else if (onNextLine === 3) {
+	                 onNextLine = 1;
+	             }
+			}
+			return catchArray;
+		})();
+		if ((pieceId > 20 && pieceId < 41) && (playableSquares.includes(squareId)) {
 			let pieceArray = this.#piecesSquarePairingWhite.get(pieceId);
 			pieceArray[0] = squareId;
 			this.#piecesSquarePairingWhite.set(pieceId, pieceArray);
@@ -581,10 +623,31 @@ class Checkers {
 		var thisInstance = this;
 		var backRowBlack = [2, 4, 6, 8, 10];
 		var backRowWhite = [91, 93, 95, 97, 99];
+		var playableSquares = (function () {
+			let catchArray = [];
+			let squareId = 2;
+			let onNextLine = 1;
+			for (let i = 0; i <= 9; i = i + 1) {
+				for (let j = 0; j <= 4; j = j + 1) {
+					catchArray.push(squareId);
+					if (j === 4) {
+						squareId = squareId + onNextLine;
+					} else {
+						squareId = squareId + 2;
+					}
+				}
+				if (onNextLine === 1) {
+					onNextLine = 3;
+				} else if (onNextLine === 3) {
+	                 onNextLine = 1;
+	             }
+			}
+			return catchArray;
+		})();
 		if (thisInstance.state() === "ongoing") {
 			var pieceId = thisInstance.square(squareId01,"occupantId");
 			var PieceBelongsTo = pieceId <= 20 ? "black" : "white";
-			if (PieceBelongsTo === thisInstance.turn) {
+			if ((PieceBelongsTo === thisInstance.turn) && playableSquares.includes(squareId02)) {
 				var arrayMoves = piece(pieceId, "moves");
 				if (arrayMoves.includes(squareId02)) {
 					if (pieceId <= 20) {
