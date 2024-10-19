@@ -579,6 +579,8 @@ class Checkers {
 
 	move (squareId01, squareId02) {
 		var thisInstance = this;
+		var backRowBlack = [2, 4, 6, 8, 10];
+		var backRowWhite = [91, 93, 95, 97, 99];
 		if (thisInstance.state() === "ongoing") {
 			var pieceId = thisInstance.square(squareId01,"occupantId");
 			var PieceBelongsTo = pieceId <= 20 ? "black" : "white";
@@ -586,17 +588,27 @@ class Checkers {
 				var arrayMoves = piece(pieceId, "moves");
 				if (arrayMoves.includes(squareId02)) {
 					if (pieceId <= 20) {
+						if (thisInstance.square(squareId01, "occupantType") === "manBlack") {
+							if (backRowWhite.includes(squareId02)) {
+								thisInstance.setPieceBlackKing(pieceId);
+							}
+						}
 						thisInstance.setPieceBlackSquare(pieceId, squareId02);
 						thisInstance.turn = "white";
-						return 1;
+						return 1; //successful
 					} else {
+						if (thisInstance.square(squareId01, "occupantType") === "manWhite") {
+							if (backRowBlack.includes(squareId02)) {
+								thisInstance.setPieceBlackKing(pieceId);
+							}
+						}
 						thisInstance.setPieceWhiteSquare(pieceId, squareId02);
 						thisInstance.turn = "black";
-						return 1;
+						return 1; //successful
 					}
 				}	
 			} else {
-				return 0; //Move cannot be made or not valid.
+				return 0; //Move cannot be made or is not valid.
 			}
 		} else {
 			return -1; //The game is over, check state() for detials.
@@ -704,4 +716,7 @@ class Checkers {
 	}
 	//XXX: END OF => Methods
 }
+
+const checkers = new Checkers();
+console.log(checkers.piece(10, "moves"));
 
