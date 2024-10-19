@@ -178,8 +178,8 @@ piece (pieceId, method) { //XXX: To be tested
 	}
 
 	function hasMoves(pieceId) {
-		var a = moves(pieceId);
-		if (a.length === 4) {
+		var arrayMoves = moves(pieceId);
+		if (arrayMoves.length === 4) {
 			return false;
 		} else {
 			return true;
@@ -573,23 +573,27 @@ piece (pieceId, method) { //XXX: To be tested
 
 move (squareId01, squareId02) {
 	var thisInstance = this;
-	var pieceId = thisInstance.square(squareId01,"occupantId");
-	var PieceBelongsTo = pieceId <= 20 ? "black" : "white";
-	if (PieceBelongsTo === thisInstance.turn) {
-		var arrayMoves = piece(pieceId, "moves");
-		if (arrayMoves.includes(squareId02)) {
-			if (pieceId <= 20) {
-				thisInstance.setPieceBlackSquare(pieceId, squareId02);
-				thisInstance.turn = "white";
-				return 1;
-			} else {
-				thisInstance.setPieceWhiteSquare(pieceId, squareId02);
-				thisInstance.turn = "black";
-				return 1;
-			}
-		}	
+	if (thisInstance.state() === "ongoing") {
+		var pieceId = thisInstance.square(squareId01,"occupantId");
+		var PieceBelongsTo = pieceId <= 20 ? "black" : "white";
+		if (PieceBelongsTo === thisInstance.turn) {
+			var arrayMoves = piece(pieceId, "moves");
+			if (arrayMoves.includes(squareId02)) {
+				if (pieceId <= 20) {
+					thisInstance.setPieceBlackSquare(pieceId, squareId02);
+					thisInstance.turn = "white";
+					return 1;
+				} else {
+					thisInstance.setPieceWhiteSquare(pieceId, squareId02);
+					thisInstance.turn = "black";
+					return 1;
+				}
+			}	
+		} else {
+			return 0; //Move cannot be made or not valid.
+		}
 	} else {
-		return 0;
+		return -1; //The game is over, check state() for detials.
 	}
 }
 
@@ -674,17 +678,18 @@ square (squareId, method) {
 }
 
 state () {
-	if (piecesWhite === 0) {
+	var thisInstance = this;
+	if (thisInstance.piecesWhite <= 0) {
 		return "winBlack";
-	} else if (piecesBlack=== 0) {
+	} else if (thisInstance.piecesBlack <= 0) {
 		return "winWhite";
-	} else if (playing("hasMoves") === false) {
-		if (turn --- "black") {
+	} else if (thisInstance.playing("hasMoves") === false) {
+		if (thisInstance.turn === "black") {
 			return "winWhite";
 		} else {
 			return "winBlack";
 		}
-	} else if (kingMoves === 0) {
+	} else if (thisInstance.kingMoves <= 0) {
 		return "draw";
 	} else {
 		return "ongoing";
