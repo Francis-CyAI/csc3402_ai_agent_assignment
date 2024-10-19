@@ -572,17 +572,25 @@ piece (pieceId, method) { //XXX: To be tested
 }
 
 move (squareId01, squareId02) {
-	var pieceId = square(squareId01, "occupantId");
-	var a = piece(pieceId, "moves");
-	
-	if (a.includes(squareId02)) {
-		if (pieceId <= 20) {
-			setPieceBlackSquare(pieceId, squareId02);
-		} else {
-			setPieceWhiteSquare(pieceId, squareId02);
-		}
+	var thisInstance = this;
+	var pieceId = thisInstance.square(squareId01,"occupantId");
+	var PieceBelongsTo = pieceId <= 20 ? "black" : "white";
+	if (PieceBelongsTo === thisInstance.turn) {
+		var arrayMoves = piece(pieceId, "moves");
+		if (arrayMoves.includes(squareId02)) {
+			if (pieceId <= 20) {
+				thisInstance.setPieceBlackSquare(pieceId, squareId02);
+				thisInstance.turn = "white";
+				return 1;
+			} else {
+				thisInstance.setPieceWhiteSquare(pieceId, squareId02);
+				thisInstance.turn = "black";
+				return 1;
+			}
+		}	
+	} else {
+		return 0;
 	}
-	
 }
 
 playing (method = "turn") {
