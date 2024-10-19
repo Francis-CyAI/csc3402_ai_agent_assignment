@@ -191,7 +191,7 @@ class Checkers {
 			}
 			return catchArray;
 		})();
-		if ((pieceId > 20 && pieceId < 41) && (playableSquares.includes(squareId)) {
+		if ((pieceId > 20 && pieceId < 41) && (playableSquares.includes(squareId))) {
 			let pieceArray = this.#piecesSquarePairingWhite.get(pieceId);
 			pieceArray[0] = squareId;
 			this.#piecesSquarePairingWhite.set(pieceId, pieceArray);
@@ -212,7 +212,7 @@ class Checkers {
 	//XXX: END OF => Accessors
 	
 	//XXX: START OF => Methods
-	piece (pieceId, method) { //XXX: To be tested
+	piece (pieceId, method) {
 		var thisInstance = this;
 		
 		function occupies(pieceId) {
@@ -234,7 +234,7 @@ class Checkers {
 			}
 		 }
 
-		function moves(pieceId) {
+		function moves(pieceId) { //FIXME: Some logic error(s)
 			var si = occupies(pieceId);
 			var si11;
 			var si22;
