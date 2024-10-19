@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 export default function Board() {
     const boardState = useSelector(state => state.board.current)
     // console.log("\n\nCurrent state from board element: ", boardState, "\n\n")
+    // logToFile(boardState)
 
     return (
         <div className="board">
@@ -24,6 +25,8 @@ export default function Board() {
                     }
                 </div>
                ))
+               
+               
                /*
                 initialState.map((sqrList, index) => (
                     <div key={index} className="square-row">
@@ -44,6 +47,9 @@ export default function Board() {
                 */
             }
             
+            {
+                // JSON.stringify(boardState)
+            }
         </div>
     );
 }

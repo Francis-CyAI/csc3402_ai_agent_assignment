@@ -9,7 +9,7 @@ import { ReplaceUpdateBoardSate } from "./board_state_util"
 
 export function generateInitialBoardState(): BoardStateType {
     let first = 0
-    let last = boardSquareConfigCount - 1
+    let last = 9 //boardSquareConfigCount - 1
 
     // Create a deep copy of the partialInitialBoardState
     let boardState = partialInitialBoardState.map(row => row.map(square => ({ ...square })))

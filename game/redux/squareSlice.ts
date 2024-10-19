@@ -29,7 +29,7 @@ const squareSlice = createSlice({
         toSquareDeselected(state) {
             state.toSquareSelected = false
         },
-        clear(state) {
+        clearSquareSelections(state) {
             state.fromSquare = [-1, -1]
             state.toSquare = [-1, -1]
             state.fromSquareSelected = false
@@ -45,7 +45,7 @@ export const {
     fromSquareDeselected,
     toSquareSelected,
     toSquareDeselected,
-    clear 
+    clearSquareSelections 
 } = squareSlice.actions;
 
 export default squareSlice.reducer;

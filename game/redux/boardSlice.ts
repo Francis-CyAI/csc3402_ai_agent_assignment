@@ -20,15 +20,17 @@ const boardSlice = createSlice({
     initialState,
     reducers: {
         updateBoard(state, action: PayloadAction<Partial<BoardStateType>>) {
+            /*
             // Push the current state to history (for undo)
             if (state.history.length >= 3) {
                 state.history.shift(); // Remove oldest state if we have 3 already
             }
             state.history.push(state.current); // Save current state for undo
             state.future = []; // Clear future states on new update
+            */
 
             // Update the current state
-            state.current = { ...state.current, ...action.payload };
+            state.current = action.payload as BoardStateType;
         },
         undo(state) {
             if (state.history.length > 0) {
