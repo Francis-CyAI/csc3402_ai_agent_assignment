@@ -1,25 +1,24 @@
-import move from "src/controllers/move.js";
-import piece from "src/controllers/piece.js";
-import square from "src/controllers/square.js";
-import turn from "src/controllers/turn.js";
-import state from "src/controllers/state.js";
 //import importservice from "src/controllers/importservice.js";
 //import exportservice from "src/controllers/exportservice.js";
 
 class Checkers {
+	//XXX: START OF => Properties
    #piecesWhite;
 	#piecesBlack;
 	#turn;
 	#kingMoves;
 	#piecesSquarePairingBlack;
 	#piecesSquarePairingWhite;
-    
-    constructor() {
-	this.#piecesWhite = 20;
-	this.#piecesBlack = 20;
-	this.#turn = "white";
-	this.#kingMoves = 25;
-	this.#piecesSquarePairingBlack = new Map((function () {
+	#playableSquares;
+	//XXX: END OF => Properties
+   
+   //XXX: START OF => Contructor
+	constructor() {
+		this.#piecesWhite = 20;
+		this.#piecesBlack = 20;
+		this.#turn = "white";
+		this.#kingMoves = 25;
+		this.#piecesSquarePairingBlack = new Map((function () {
 			let pairing = [];
 			let pieceId = 1;
 			let squareId = 2;
@@ -28,22 +27,22 @@ class Checkers {
 				for (let j = 0; j <= 4; j = j + 1) {
 					pairing.push([pieceId, [squareId ,0 ]]);
 					pieceId = pieceId + 1;
-                    if (j === 4) {
-                        squareId = squareId + onNextLine;
-                    } else {
-    					squareId = squareId + 2;
-                    }
+	                 if (j === 4) {
+	                     squareId = squareId + onNextLine;
+	                 } else {
+	 					squareId = squareId + 2;
+	                 }
 				}
 				if (onNextLine === 1) {
 					onNextLine = 3;
 				} else if (onNextLine === 3) {
-                    onNextLine = 1;
-                }
+	                 onNextLine = 1;
+	             }
 			}
 			return pairing;
 		})()
-	);
-	this.#piecesSquarePairingWhite = new Map((function () {
+		);
+		this.#piecesSquarePairingWhite = new Map((function () {
 			let pairing = [];
 			let pieceId = 21;
 			let squareId = 62;
@@ -52,23 +51,46 @@ class Checkers {
 				for (let j = 0; j <= 4; j = j + 1) {
 					pairing.push([pieceId, [squareId ,0 ]]);
 					pieceId = pieceId + 1;
-                    if (j === 4) {
-                        squareId = squareId + onNextLine;
-                    } else {
-    					squareId = squareId + 2;
-                    }
+	                 if (j === 4) {
+	                     squareId = squareId + onNextLine;
+	                 } else {
+	 					squareId = squareId + 2;
+	                 }
 				}
 				if (onNextLine === 1) {
 					onNextLine = 3;
 				} else if (onNextLine === 3) {
-                    onNextLine = 1;
-                }
+	                 onNextLine = 1;
+	             }
 			}
 			return pairing;
 		})()
-	);
-    }
+		);
+		this.#playableSquares = (function () {
+			let catchArray = [];
+			let squareId = 2;
+			let onNextLine = 1;
+			for (let i = 0; i <= 9; i = i + 1) {
+				for (let j = 0; j <= 4; j = j + 1) {
+					catchArray.push(squareId);
+					if (j === 4) {
+						squareId = squareId + onNextLine;
+					} else {
+						squareId = squareId + 2;
+					}
+				}
+				if (onNextLine === 1) {
+					onNextLine = 3;
+				} else if (onNextLine === 3) {
+	                 onNextLine = 1;
+	             }
+			}
+			return catchArray;
+		})();
+	}
+	//XXX: END OF => Contructor
 
+	//XXX: START OF => Accessors
 	get piecesBlack () {
 		return this.#piecesBlack;
 	}
@@ -110,6 +132,10 @@ class Checkers {
 			this.#kingMoves = this.#kingMoves + n;
 		}
 	}
+	
+	get playableSquares () {
+		return this.#playableSquares;
+	}
 
 	getPiecesSquarePairingBlack (pieceId) {
 		return this.#piecesSquarePairingBlack.get(pieceId);
@@ -126,7 +152,7 @@ class Checkers {
 	}
 	
 	setPieceBlackSquare (pieceId, squareId) {
-		if ((pieceId > 0 && pieceId < 21) && (squareId > 0 && squareId < 100)) {
+		if ((pieceId > 0 && pieceId < 21) && (this.playableSquares.includes(squareId))) {
 			let pieceArray = this.#piecesSquarePairingBlack.get(pieceId);
 			pieceArray[0] = squareId;
 			this.#piecesSquarePairingBlack.set(pieceId, pieceArray);
@@ -149,7 +175,7 @@ class Checkers {
 	}
 	
 	setPieceWhiteSquare (pieceId, squareId) {
-		if ((pieceId > 20 && pieceId < 41) && (squareId > 0 && squareId < 100)) {
+		if ((pieceId > 20 && pieceId < 41) && (this.playableSquares.includes(squareId))) {
 			let pieceArray = this.#piecesSquarePairingWhite.get(pieceId);
 			pieceArray[0] = squareId;
 			this.#piecesSquarePairingWhite.set(pieceId, pieceArray);
@@ -167,208 +193,488 @@ class Checkers {
 				this.#piecesSquarePairingWhite.set(pieceId, pieceArray);
 			}
 	}
-
-//Piece
-piece (pieceId) {
-	if (pieceId < 21) {
-		var pairing = getPiecesSquarePairingBlack(pieceId);
-		var position = pairing[0];
-		var color = "black";
-	} else if (pieceId < 41) {
-		var pairing = getPiecesSquarePairingWhite(pieceId);
-		var position = pairing[0];
-		var color = "white";
-		}
-
-	function occupies(pieceId) {
-		return position;
-	}
-
-	function hasMoves(pieceId) {
-		var pairing = getPiecesSquarePairingBlack(pieceId);
-		if (pairing[1] === 0){ //man
-			var a = [];
-			var b = [[-11, -22],[-9, -18],[9, 18],[11, 22]];
-			for (let i = 0; i <= 11; i = i + 1) [
-				for () {
-					
-				}
-			]
-
-			if (0 === square.occupantId(pairing[0]-11) ||
-				 0 === square.occupantId(pairing[0]-9) ||
-				 0 === square.occupantId(pairing[0]+9) ||
-				 0 === square.occupantId(pairing[0]+11) ) {
-				return true; //has move(s)
+	//XXX: END OF => Accessors
+	
+	//XXX: START OF => Methods
+	piece (pieceId, method) {
+		var thisInstance = this;
+		
+		function occupies(pieceId) {
+			var pairing;
+			if (pieceId >= 1 && pieceId <= 20) {
+				pairing = thisInstance.getPiecesSquarePairingBlack(pieceId);
+				return pairing[0];
+			} else if (pieceId >= 21 && pieceId <= 40) {
+				pairing = thisInstance.getPiecesSquarePairingWhite(pieceId);
+				return pairing[0];
 			} else {
-				if (0 === square.occupantType(pairing[0]-11) ||
-				 0 === square.occupantType(pairing[0]-9) ||
-				 0 === square.occupantType(pairing[0]+9) ||
-				 0 === square.occupantType(pairing[0]+11) ) {
-				 
-				 }
-				return false; //doesn't have move(s)
-			}
-		} else { //king
-			
-		}
-    }
-	
-
-}
-
-move (squareId01, squareId02) {
-	if (square.occupantType(squareId01) === manBlack) {
-		var pairing = getPiecesSquarePairingBlack(squareId01);
-		if ((pairing[0] + 9) === squareId02) {
-			if (square.occupantType(squareId02) === "none") {
-				setPieceBlackSquare(square.occupantId(squareId01), squareId02);
-			}
-		} else if ((pairing[0] + 11) === squareId02) {
-			if (square.occupantType(squareId02) === "none") {
-				setPieceBlackSquare(square.occupantId(squareId01), squareId02);
+				return -1; //pieceId is not valid
 			}
 		}
-	} else if (square.occupantType(squareId01) === manWhite) {
-		var pairing = getPiecesSquarePairingWhite(squareId01);
-		if ((pairing[0] + 9) === squareId02) {
-			if (square.occupantType(squareId02) === "none") {
-				setPieceWhiteSquare(square.occupantId(squareId01), squareId02);
+
+		function hasMoves(pieceId) {
+			var arrayMoves = moves(pieceId);
+			if (arrayMoves.length === 4) {
+				return false;
+			} else {
+				return true;
 			}
-		} else if ((pairing[0] + 11) === squareId02) {
-			if (square.occupantType(squareId02) === "none") {
-				setPieceWhiteSquare(square.occupantId(squareId01), squareId02);
+		 }
+
+		function moves(pieceId) { //FIXME: Some logic error(s)
+			if (pieceId >= 1 && pieceId <= 40) {
+				var si = occupies(pieceId);
+				console.log(occupies(pieceId)); //XXX
+				var si11;
+				var si22;
+				var i = 0;
+				var arrayMoves = [];
+				var iteretionSwitch = function (iteretion) {
+					if (iteretion === 0) {
+						si11 = thisInstance.square(si - 11, "occupantType");
+						si22 = thisInstance.square(si - 22, "occupantType");
+					} else if (iteretion === 1) {
+						si11 = thisInstance.square(si - 9, "occupantType");
+						si22 = thisInstance.square(si - 18, "occupantType");
+					} else if (iteretion === 2) {
+						si11 = thisInstance.square(si + 11, "occupantType");
+						si22 = thisInstance.square(si + 22, "occupantType");
+					} else if (iteretion === 3) {
+						si11 = thisInstance.square(si + 9, "occupantType");
+						si22 = thisInstance.square(si + 18, "occupantType");
+					}
+				};
+				var push_xx0 =  function () {
+					if (i === 0) {
+					arrayMoves.push("tl0");
+					} else if (i === 1) {
+					arrayMoves.push("tr0");
+					} else if (i === 2) {
+					arrayMoves.push("br0");
+					} else if (i === 3) {
+					arrayMoves.push("bl0");
+					}
+					si = occupies(pieceId);
+					i = i + 1;
+				};
+				var push_xx1 =  function () {
+					if (i === 0) {
+					arrayMoves.push("tl1");
+					} else if (i === 1) {
+					arrayMoves.push("tr1");
+					} else if (i === 2) {
+					arrayMoves.push("br1");
+					} else if (i === 3) {
+					arrayMoves.push("bl1");
+					}
+					si = occupies(pieceId); 
+					i = i + 1;
+				};
+				var push_squareId =  function () {
+					if (i === 0) {
+						si = si - 11;
+					} else if (i === 1) {
+						si = si - 9;
+					} else if (i === 2) {
+						si = si + 11;
+					} else if (i === 3) {
+						si = si + 9;
+					}
+					arrayMoves.push(si);
+				};
+				//XXX: NOTE => b = 1; w = 2; . = 3; e = 4
+				
+				while (i <= 3) {// 4 iteretions
+					if (i === 0) {//XXX: START OF => Top-left diagonal
+						iteretionSwitch(i);
+						if ((si11 === "manBlack") || (si11 === "kingBlack")) {
+							si11 = 1;
+						} else if ((si11 === "manWhite") || (si11 === "kingWhite")) {
+							si11 = 2;
+						} else if (si11 === "none") {
+							si11 = 3;
+						} else {
+							push_xx0();
+							continue; //To next diagonal
+						}
+						
+						if ((si22 === "manBlack") || (si22 === "kingBlack")) {
+							si22 = 1;
+						} else if ((si22 === "manWhite") || (si22 === "kingWhite")) {
+							si22 = 2;
+						} else if (si22 === "none") {
+							si22 = 3;
+						} else {
+							si22 = 12;
+						}
+						
+						if (((si11 * si11) + si22) <= 6) {
+							if (pieceId <= 20) { //if black piece
+							push_xx0();
+							continue;  //To next diagonal
+							} else { //if white piece
+								if (((si11 * si11) + si22) <= 3) {
+									push_xx0();
+									continue;  //To next diagonal
+								} else if (((si11 * si11) + si22) === 4) {
+									push_xx1();
+									continue;  //To next diagonal
+								} else if (((si11 * si11) + si22) <= 6) {
+									push_xx0();
+									continue;  //To next diagonal
+								}
+							}
+						} else if (((si11 * si11) + si22) === 7) {
+							if (pieceId <= 20) { //if black piece
+								push_xx1();
+								continue;  //To next diagonal
+							} else { //if white piece
+								push_xx0();
+								continue;  //To next diagonal
+							}
+							
+						} else if (((si11 * si11) + si22) <= 12) {
+							push_squareId();
+						} else if (((si11 * si11) + si22) <= 16) {
+							push_xx0();
+							continue;  //To next diagonal
+						} else if (((si11 * si11) + si22) === 21) {
+							push_squareId();
+						}
+					//XXX: END OF => Top-left diagonal
+					} else if (i === 1) {//XXX: START OF => Top-right diagonal
+						iteretionSwitch(i);
+						if ((si11 === "manBlack") || (si11 === "kingBlack")) {
+							si11 = 1;
+						} else if ((si11 === "manWhite") || (si11 === "kingWhite")) {
+							si11 = 2;
+						} else if (si11 === "none") {
+							si11 = 3;
+						} else {
+							push_xx0();
+							continue; //To next diagonal
+						}
+						
+						if ((si22 === "manBlack") || (si22 === "kingBlack")) {
+							si22 = 1;
+						} else if ((si22 === "manWhite") || (si22 === "kingWhite")) {
+							si22 = 2;
+						} else if (si22 === "none") {
+							si22 = 3;
+						} else {
+							si22 = 12;
+						}
+						
+						if (((si11 * si11) + si22) <= 6) {
+							if (pieceId <= 20) { //if black piece
+							push_xx0();
+							continue;  //To next diagonal
+							} else { //if white piece
+								if (((si11 * si11) + si22) <= 3) {
+									push_xx0();
+									continue;  //To next diagonal
+								} else if (((si11 * si11) + si22) === 4) {
+									push_xx1();
+									continue;  //To next diagonal
+								} else if (((si11 * si11) + si22) <= 6) {
+									push_xx0();
+									continue;  //To next diagonal
+								}
+							}
+						} else if (((si11 * si11) + si22) === 7) {
+							if (pieceId <= 20) { //if black piece
+								push_xx1();
+								continue;  //To next diagonal
+							} else { //if white piece
+								push_xx0();
+								continue;  //To next diagonal
+							}
+							
+						} else if (((si11 * si11) + si22) <= 12) {
+							push_squareId();
+						} else if (((si11 * si11) + si22) <= 16) {
+							push_xx0();
+							continue;  //To next diagonal
+						} else if (((si11 * si11) + si22) === 21) {
+							push_squareId();
+						}
+					//XXX: END OF => Top-right diagonal
+					} else if (i === 2) {//XXX: START OF => Bottom-right diagonal
+						iteretionSwitch(i);
+						if ((si11 === "manBlack") || (si11 === "kingBlack")) {
+							si11 = 1;
+						} else if ((si11 === "manWhite") || (si11 === "kingWhite")) {
+							si11 = 2;
+						} else if (si11 === "none") {
+							si11 = 3;
+						} else {
+							push_xx0();
+							continue; //To next diagonal
+						}
+						
+						if ((si22 === "manBlack") || (si22 === "kingBlack")) {
+							si22 = 1;
+						} else if ((si22 === "manWhite") || (si22 === "kingWhite")) {
+							si22 = 2;
+						} else if (si22 === "none") {
+							si22 = 3;
+						} else {
+							si22 = 12;
+						}
+						
+						if (((si11 * si11) + si22) <= 6) {
+							if (pieceId <= 20) { //if black piece
+							push_xx0();
+							continue;  //To next diagonal
+							} else { //if white piece
+								if (((si11 * si11) + si22) <= 3) {
+									push_xx0();
+									continue;  //To next diagonal
+								} else if (((si11 * si11) + si22) === 4) {
+									push_xx1();
+									continue;  //To next diagonal
+								} else if (((si11 * si11) + si22) <= 6) {
+									push_xx0();
+									continue;  //To next diagonal
+								}
+							}
+						} else if (((si11 * si11) + si22) === 7) {
+							if (pieceId <= 20) { //if black piece
+								push_xx1();
+								continue;  //To next diagonal
+							} else { //if white piece
+								push_xx0();
+								continue;  //To next diagonal
+							}
+							
+						} else if (((si11 * si11) + si22) <= 12) {
+							push_squareId();
+						} else if (((si11 * si11) + si22) <= 16) {
+							push_xx0();
+							continue;  //To next diagonal
+						} else if (((si11 * si11) + si22) === 21) {
+							push_squareId();
+						}
+					//XXX: END OF => Bottom-right diagonal
+					} else {//XXX: START OF => Bottom-left diagonal
+						iteretionSwitch(i);
+						if ((si11 === "manBlack") || (si11 === "kingBlack")) {
+							si11 = 1;
+						} else if ((si11 === "manWhite") || (si11 === "kingWhite")) {
+							si11 = 2;
+						} else if (si11 === "none") {
+							si11 = 3;
+						} else {
+							push_xx0();
+							continue; //To next diagonal
+						}
+						
+						if ((si22 === "manBlack") || (si22 === "kingBlack")) {
+							si22 = 1;
+						} else if ((si22 === "manWhite") || (si22 === "kingWhite")) {
+							si22 = 2;
+						} else if (si22 === "none") {
+							si22 = 3;
+						} else {
+							si22 = 12;
+						}
+						
+						if (((si11 * si11) + si22) <= 6) {
+							if (pieceId <= 20) { //if black piece
+							push_xx0();
+							continue;  //To next diagonal
+							} else { //if white piece
+								if (((si11 * si11) + si22) <= 3) {
+									push_xx0();
+									continue;  //To next diagonal
+								} else if (((si11 * si11) + si22) === 4) {
+									push_xx1();
+									continue;  //To next diagonal
+								} else if (((si11 * si11) + si22) <= 6) {
+									push_xx0();
+									continue;  //To next diagonal
+								}
+							}
+						} else if (((si11 * si11) + si22) === 7) {
+							if (pieceId <= 20) { //if black piece
+								push_xx1();
+								continue;  //To next diagonal
+							} else { //if white piece
+								push_xx0();
+								continue;  //To next diagonal
+							}
+							
+						} else if (((si11 * si11) + si22) <= 12) {
+							push_squareId();
+						} else if (((si11 * si11) + si22) <= 16) {
+							push_xx0();
+							continue;  //To next diagonal
+						} else if (((si11 * si11) + si22) === 21) {
+							push_squareId();
+						}
+					//XXX: END OF => Bottom-left diagonal
+					} 
+				}
+				return arrayMoves;
+			} else {
+				return -1;
 			}
+		} //XXX: END OF => moves
+		
+		if (method === "occupies") {
+			return occupies(pieceId);
+		} else if (method === "hasMoves") {
+			return hasMoves(pieceId);
+		}  else if (method === "moves") {
+			return moves(pieceId);
 		}
 	}
-}
 
-playing () {
-	function hasMoves() {
-		var has = false;
-		var pieceId;
-		var n;
-	
-		if (turn === white) {
-			pieceId = 21;
-			n = 41;
-		} else (
-			pieceId = 1;
-			n = 21;
-		)
-	
-		for (pieceId; pieceId < n; pieceId++) {
-			if (piece.hasMoves(pieceId) === true) {
-				has = true;
+	move (squareId01, squareId02) {
+		var thisInstance = this;
+		var backRowBlack = [2, 4, 6, 8, 10];
+		var backRowWhite = [91, 93, 95, 97, 99];
+		if (thisInstance.state() === "ongoing") {
+			var pieceId = thisInstance.square(squareId01,"occupantId");
+			var PieceBelongsTo = pieceId <= 20 ? "black" : "white";
+			if ((PieceBelongsTo === thisInstance.turn) && thisInstance.playableSquares.includes(squareId02)) {
+				var arrayMoves = piece(pieceId, "moves");
+				if (arrayMoves.includes(squareId02)) {
+					if (pieceId <= 20) {
+						if (thisInstance.square(squareId01, "occupantType") === "manBlack") {
+							if (backRowWhite.includes(squareId02)) {
+								thisInstance.setPieceBlackKing(pieceId);
+							}
+						}
+						thisInstance.setPieceBlackSquare(pieceId, squareId02);
+						thisInstance.turn = "white";
+						return 1; //successful
+					} else {
+						if (thisInstance.square(squareId01, "occupantType") === "manWhite") {
+							if (backRowBlack.includes(squareId02)) {
+								thisInstance.setPieceBlackKing(pieceId);
+							}
+						}
+						thisInstance.setPieceWhiteSquare(pieceId, squareId02);
+						thisInstance.turn = "black";
+						return 1; //successful
+					}
+				}	
+			} else {
+				return 0; //Move cannot be made or is not valid.
 			}
+		} else {
+			return -1; //The game is over, check state() for detials.
 		}
-	
-		if (has === false) {
+	}
+
+	playing (method = "turn") {
+		var thisInstance = this;
+		function hasMoves() {
+			var pieceId; var n;
+		
+			if (thisInstance.turn === "white") {
+				pieceId = 21; n = 41;
+			} else {
+				pieceId = 1; n = 21;
+			}
+		
+			for (pieceId; pieceId < n; pieceId = pieceId + 1) {
+				if (thisInstance.piece(pieceId,  "hasMoves") === true) {
+					return true; //
+				}
+			}
 			return false;
-		} else {
-			return true;
 		}
+		
+		if (method === "turn") {
+			return thisInstance.turn;
+		} else if (method === "hasMoves") {
+			return hasMoves();
 		}
-
-		return turn;
 	}
 
-square (squareId) {
-	function occupantId(squareId) {
-		for (let i = 0; i <= 39; i = i + 1) {
-			var pairing1 = getPiecesSquarePairingBlack(i);
-			var pairing2 = getPiecesSquarePairingWhite(i);
-			if (squareId === pairing1[0]) {
-				return i;
-			}
-			if (squareId === pairing2[0]) {
-				return i;
-			}
-		}
-		return 0;
-	}
-	
-	function occupantType(squareId) {
-		var pairingBlack;
-		var pairingWhite;
-		for (let i = 0; i <= 39; i = i + 1) {
-			vpairingBlack = getPiecesSquarePairingBlack(i);
-			pairingWhite = getPiecesSquarePairingWhite(i);
-			if (squareId === pairingBlack[0]) {
-				if (pairingBlack[1] === 1) {
-					return kingBlack;
-				} else {
-					return manBlack;
+	square (squareId, method) {
+		var thisInstance = this;
+		function occupantId(squareId) {
+			if (thisInstance.playableSquares.includes(squareId)) {
+				var pairingBlack;
+				var pairingWhite;
+				for (let i = 1; i <= 40; i = i + 1) {
+					if (i <= 20) {
+					pairingBlack = thisInstance.getPiecesSquarePairingBlack(i);
+						if (squareId === pairingBlack[0]) {
+							return i; //square is occupied by i
+						}
+					} else {
+					pairingWhite = thisInstance.getPiecesSquarePairingWhite(i);
+						if (squareId === pairingWhite[0]) {
+						return i; //square is occupied by i
+						}	
+					}
 				}
+				return 0; //square is unoccupied
+			} else {
+				return -1; //squareId provided is not valid
 			}
-			if (squareId === pairingWhite[0]) {
-			if (pairingWhite[1] === 1) {
-					return kingWhite;
-				} else {
-					return manWhite;
+		}
+		
+		function occupantType(squareId) {
+			if (thisInstance.playableSquares.includes(squareId)) {
+				var pairingBlack;
+				var pairingWhite;
+				for (let i = 1; i <= 40; i = i + 1) {
+					if (i <= 20) {
+					pairingBlack = thisInstance.getPiecesSquarePairingBlack(i);
+						if (squareId === pairingBlack[0]) {
+							if (pairingBlack[1] === 1) {
+								return "kingBlack";
+							} else {
+								return "manBlack";
+							}
+						}
+					} else {
+					pairingWhite = thisInstance.getPiecesSquarePairingWhite(i);
+						if (squareId === pairingWhite[0]) {
+						if (pairingWhite[1] === 1) {
+								return "kingWhite";
+							} else {
+								return "manWhite";
+							}
+						}	
+					}
 				}
+				return "none";
+			} else {
+				return -1; //squareId provided is not valid
 			}
 		}
-		return "none";
-	}
-}
-
-state () {
-	if (piecesWhite === 0) {
-		return winBlack;
-	} else if (piecesBlack=== 0) {
-		return winWhite;
-	} else if (playing.hasMoves() === false) {
-		if (turn --- "black") {
-			return winWhite;
-		} else {
-			return winBlack;
+		
+		if (method === "occupantId") {
+			return occupantId(squareId);
+		} else if (method === "occupantType") {
+			return occupantType(squareId);
 		}
-	} else if (kingMoves === 0) {
-		return draw;
-	} else {
-		return ongoing;
 	}
+
+	state () {
+		var thisInstance = this;
+		if (thisInstance.piecesWhite <= 0) {
+			return "winBlack";
+		} else if (thisInstance.piecesBlack <= 0) {
+			return "winWhite";
+		} else if (thisInstance.playing("hasMoves") === false) {
+			if (thisInstance.turn === "black") {
+				return "winWhite";
+			} else {
+				return "winBlack";
+			}
+		} else if (thisInstance.kingMoves <= 0) {
+			return "draw";
+		} else {
+			return "ongoing";
+		}
+	}
+	//XXX: END OF => Methods
 }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
