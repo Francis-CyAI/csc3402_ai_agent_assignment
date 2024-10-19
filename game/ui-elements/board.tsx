@@ -48,7 +48,7 @@ export default function Board() {
             }
             
             {
-                // JSON.stringify(boardState)
+                JSON.stringify(boardState)
             }
         </div>
     );
