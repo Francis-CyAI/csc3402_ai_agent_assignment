@@ -237,11 +237,11 @@ class Checkers {
 						si11 = thisInstance.square(si - 9, "occupantType");
 						si22 = thisInstance.square(si - 18, "occupantType");
 					} else if (iteretion === 2) {
-						si11 = thisInstance.square(si + 9, "occupantType");
-						si22 = thisInstance.square(si + 18, "occupantType");
-					} else if (iteretion === 3) {
 						si11 = thisInstance.square(si + 11, "occupantType");
 						si22 = thisInstance.square(si + 22, "occupantType");
+					} else if (iteretion === 3) {
+						si11 = thisInstance.square(si + 9, "occupantType");
+						si22 = thisInstance.square(si + 18, "occupantType");
 					}
 				};
 				var push_xx0 =  function () {
@@ -276,9 +276,9 @@ class Checkers {
 					} else if (i === 1) {
 						si = si - 9;
 					} else if (i === 2) {
-						si = si + 9;
-					} else if (i === 3) {
 						si = si + 11;
+					} else if (i === 3) {
+						si = si + 9;
 					}
 					arrayMoves.push(si);
 				};
@@ -677,5 +677,4 @@ class Checkers {
 	}
 	//XXX: END OF => Methods
 }
-
 
