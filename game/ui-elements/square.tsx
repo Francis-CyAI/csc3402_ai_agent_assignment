@@ -4,10 +4,9 @@ import SquareType from "@/types/square_type";
 import PieceType from "@/types/piece_type";
 import Piece from "./piece";
 import { useSelector, useDispatch } from "react-redux";
-import { updateFromSquare, updateToSquare, fromSquareSelected, fromSquareDeselected, toSquareSelected, toSquareDeselected, clearSquareSelections } from "@/redux/squareSlice";
+import { updateFromSquare, updateToSquare, fromSquareSelected, toSquareSelected, clearSquareSelections } from "@/redux/squareSlice";
 import { updateBoard } from "@/redux/boardSlice";
 import { BoardStateType } from "@/types/board_state_type";
-import { generateInitialBoardState } from "@/util/board_util";
 
 export default function Square(props: { id: string, color: string, onlick: Function, initialState: SquareType, keyValue: number }) {
     let squaresState = useSelector(state => state.squares)
@@ -56,31 +55,24 @@ export default function Square(props: { id: string, color: string, onlick: Funct
                         alert("Invalid move. The destination square is already occupied.")
                         dispatch(clearSquareSelections())
                         return
+                    } else if (!toSqrOnBoard.playable) {
+                        alert("Invalid move. The destination square is not playable.")
+                        dispatch(clearSquareSelections())
+                        return
                     } else {
-                        // Perform the move by swapping pieces
-                        let newToSquare: SquareType = {
-                            playable: true,
-                            piece: fromSqrOnBoard.piece,  // Move the piece to the new square
-                            occupied: true,
-                            coordinates: toSqrOnBoard.coordinates
-                        }
+                        // Perform the move by transferring only the contents (piece, occupied)
+                        let updatedBoardState: BoardStateType = board.map(row => row.map(square => ({ ...square })))
 
-                        let newFromSquare: SquareType = {
-                            playable: true,
-                            piece: null, // Clear the piece from the original square
-                            occupied: false,
-                            coordinates: fromSqrOnBoard.coordinates
-                        }
+                        // Transfer piece from the source to the destination square
+                        updatedBoardState[toRow][toCol].piece = fromSqrOnBoard.piece;
+                        updatedBoardState[toRow][toCol].occupied = true;
 
-                        // Create a deep copy of the board state
-                        let newBoardState: BoardStateType = board.map(row => row.map(square => ({ ...square })))
-
-                        // Update the squares on the new board state
-                        newBoardState[fromRow][fromCol] = newFromSquare
-                        newBoardState[toRow][toCol] = newToSquare
+                        // Clear the source square
+                        updatedBoardState[fromRow][fromCol].piece = undefined;
+                        updatedBoardState[fromRow][fromCol].occupied = false;
 
                         // Dispatch the updated board state
-                        dispatch(updateBoard(newBoardState))
+                        dispatch(updateBoard(updatedBoardState))
                         dispatch(clearSquareSelections())
 
                         alert("Move completed successfully.")
