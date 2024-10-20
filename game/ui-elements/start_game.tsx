@@ -13,8 +13,12 @@ export default function StartGame() {
     const dispatch = useDispatch();
 
     const handleStart = () => {
+        dispatch(resetGame());
+
         if (player1Name === "" || player2Name === "") {
-            setError("Both player names are required.");
+            setError("Using default player names...");
+            // Navigate to the playing page
+            setTimeout(() => { router.push('/playing'); }, 750)
         } else {
             setError("");
             // Store player names in local storage or state management
@@ -22,7 +26,6 @@ export default function StartGame() {
             // localStorage.setItem("player2", player2Name);
 
             dispatch(setPlayerNames({ player1Name, player2Name }));
-            dispatch(resetGame());
             // Navigate to the playing page
             router.push('/playing');
         }
@@ -39,7 +42,7 @@ export default function StartGame() {
                 <div className="mb-4 p-2">
                     <input
                         type="text"
-                        placeholder="Player 1 Name"
+                        placeholder="optional Player 1 Name"
                         value={player1Name}
                         onChange={(e) => setPlayer1Name(e.target.value)}
                         className="px-4 py-2 w-64 text-lg rounded-md border border-gray-300 text-black"
@@ -49,7 +52,7 @@ export default function StartGame() {
                 <div className="mb-4 p-2">
                     <input
                         type="text"
-                        placeholder="Player 2 Name"
+                        placeholder="optional Player 2 Name"
                         value={player2Name}
                         onChange={(e) => setPlayer2Name(e.target.value)}
                         className="px-4 py-2 w-64 text-lg rounded-md border border-gray-300 text-black"

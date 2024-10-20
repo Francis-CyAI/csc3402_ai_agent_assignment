@@ -14,7 +14,7 @@ export default function MessageBoard() {
         <div>
             {
             messageObject.message == initialMessage ? 
-                initialMessage + " Ready "+ currentPlayerName  +"?"
+                initialMessage + "\nThe grey pieces are " + currentPlayerName + "'s."+ "\nReady "+ currentPlayerName  +"?"
                 : messageObject.message
             }
         </div>
