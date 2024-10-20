@@ -11,7 +11,29 @@ export default function PlayingPage() {
             <div className="flex items-center justify-center h-screen bg-gray-800 mt-36">
                 <Board />
             </div>
-            <DataSetLogger />
+            
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+            <div className="space-small"></div>
+
+            <div className="pv-4">
+                <DataSetLogger />
+            </div>
         </>
     );
 }

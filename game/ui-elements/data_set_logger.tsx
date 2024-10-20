@@ -14,18 +14,34 @@ export default function DataSetLogger() {
     let resultingBoardState:string = ""
     let currentBoardState:string = ""
 
+    let stringifiedBoardState = JSON.stringify(boardState.current)
+
+    let message:string
 
     if (player2Turn) {
         // log the before-state data sample
-        currentBoardState = boardState
-        // alert(`current board state: \n\n ${JSON.stringify(currentBoardState)}`)
+        currentBoardState = stringifiedBoardState
+        // alert(`Player 2's turn. \ncurrent board state: \n\n ${JSON.stringify(currentBoardState)}`)
+        message = "Player 2's turn. \ncurrent board state:\n\n"
     } else {
         // log the after-state data sample
-        resultingBoardState = boardState
-        // alert(`resulting board state: \n\n ${JSON.stringify(resultingBoardState)}`)
+        // Ignore the first time
+        resultingBoardState = stringifiedBoardState
+        // alert(`Player 1's turn. \nresulting board state: \n\n ${JSON.stringify(resultingBoardState)}`)
+        message = "Please ignore the first time\n\n.Player 1's turn. \nresulting board state: \n\n"
     }
 
     // alert(JSON.stringify(playersState))
 
-    return <></>
+    return (
+        
+        <div>
+            <div>
+                { message }
+            </div>
+            <div>
+                {resultingBoardState.length > 0 ? resultingBoardState : currentBoardState}
+            </div>
+        </div>
+    )
 }
