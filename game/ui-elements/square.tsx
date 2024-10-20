@@ -36,6 +36,21 @@ export default function Square(props: { id: string, color: string, onClick: Func
             id={props.id}
             className={`${props.color} w-8 h-8 square`}
             onClick={() => {
+                if (!props.initialState.playable) {
+                    alert("Invalid selection. The selected square is not playable.")
+                    dispatch(clearSquareSelections());
+                    return;
+                }
+
+                let pieceOnSquare = props.initialState.piece 
+
+                if (pieceOnSquare != null && pieceOnSquare.playerId != currentPlayer.playerId) {
+                    // Disallow play if selected piece does not belong to legal current player
+                    alert(`Invalid. It is ${currentPlayerName}'s turn to play.`)
+                    dispatch(clearSquareSelections());
+                    return;
+                }
+            
                 if (!squaresState.fromSquareSelected && !squaresState.toSquareSelected) {
                     // Select the source square
                     dispatch(updateFromSquare(props.initialState.coordinates));

@@ -33,6 +33,9 @@ export default function StartGame() {
             <div className="text-center">
                 <h1 className="text-5xl font-bold text-white mb-8">Enter Players' Names</h1>
 
+                <div className="space-small"></div>
+                <div className="space-small"></div>
+
                 <div className="mb-4 p-2">
                     <input
                         type="text"
@@ -42,7 +45,7 @@ export default function StartGame() {
                         className="px-4 py-2 w-64 text-lg rounded-md border border-gray-300 text-black"
                     />
                 </div>
-
+                <div className="space-small"></div>
                 <div className="mb-4 p-2">
                     <input
                         type="text"
@@ -53,7 +56,11 @@ export default function StartGame() {
                     />
                 </div>
 
+                <div className="space-small"></div>
+
                 {error && <p className="text-red mb-4">{error}</p>}
+
+                <div className="space-small"></div>
 
                 <button
                     onClick={handleStart}
