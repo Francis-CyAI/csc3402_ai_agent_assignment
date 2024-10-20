@@ -12,8 +12,8 @@ interface PlayerState {
 
 const initialState: PlayerState = {
     players: [
-        { playerId: player1Id, playerName: "", turn: true, score: 0 }, // Player 1
-        { playerId: player2Id, playerName: "", turn: false, score: 0 }  // Player 2
+        { playerId: player1Id, playerName: "Player 1", turn: true, score: 0 }, // Player 1
+        { playerId: player2Id, playerName: "Player 2", turn: false, score: 0 }  // Player 2
     ],
     currentPlayerIndex: 0,
     gameOver: false,

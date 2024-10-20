@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+export const initialMessage = "Welcome players."
+
 const initialState = {
-    message: "Welcome players. Ready Player 1?"
+    message: initialMessage
 }
 
 const squareSlice = createSlice({
@@ -15,7 +17,7 @@ const squareSlice = createSlice({
 })
 
 export const {
-    updateMessage
+    updateMessage, 
 } = squareSlice.actions;
 
 export default squareSlice.reducer;

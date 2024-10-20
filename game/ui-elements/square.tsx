@@ -10,12 +10,17 @@ import { BoardStateType } from "@/types/board_state_type";
 import { isDiagonalMove, isForwardMove, isSingleSquareMove, isValidCaptureMove, promoteToKing } from "@/util/game_play_rules_util";
 import { player1Id, player2Id, boardSquareConfigCount } from "@/contants";
 // import { RootState } from "@/redux/store"; // Ensure you import the correct RootState type
+import { updateMessage } from "@/redux/messageSlice";
+
 
 export default function Square(props: { id: string, color: string, onClick: Function, initialState: SquareType, keyValue: number }) {
     let squaresState = useSelector((state /*: RootState*/) => state.squares);
     let boardState = useSelector((state /*: RootState*/) => state.board);
-    let playerState = useSelector((state /*: RootState*/) => state.players); // Get the player information
+    let playersState = useSelector((state /*: RootState*/) => state.players); // Get the players information
     const dispatch = useDispatch();
+
+    let playersList = playersState.players
+    let currentPlayerName: string = playersList[playersState.currentPlayerIndex].playerName
 
     let keyValue = props.keyValue ?? 0;
     let pieceInfo: PieceType = props.initialState.piece as PieceType;
@@ -33,12 +38,12 @@ export default function Square(props: { id: string, color: string, onClick: Func
                     // Select the source square
                     dispatch(updateFromSquare(props.initialState.coordinates));
                     dispatch(fromSquareSelected());
-                    alert(`Source square selected by ${playerState.currentPlayerName}`);
+                    dispatch(updateMessage(`Source square selected by ${currentPlayerName}`))
                 } else if (!squaresState.toSquareSelected && squaresState.fromSquareSelected) {
                     // Select the destination square
                     dispatch(updateToSquare(props.initialState.coordinates));
                     dispatch(toSquareSelected());
-                    alert(`Destination square selected by ${playerState.currentPlayerName}.\nAttempting move...`);
+                    dispatch(updateMessage(`Destination square selected by ${currentPlayerName}.\nAttempting move...`));
 
                     let fromRow: number = squaresState.fromSquare[0];
                     let fromCol: number = squaresState.fromSquare[1];
@@ -79,7 +84,7 @@ export default function Square(props: { id: string, color: string, onClick: Func
 
                     // If a capture is possible, it should be prioritized
                     if (isValidCaptureMove(fromSqrOnBoard, toSqrOnBoard, board, piece, player1Id, player2Id)) {
-                        alert("Capture move detected! Jumping over an opponent.");
+                        dispatch(updateMessage("Capture move detected! Jumping over an opponent."));
                         let updatedBoardState: BoardStateType = board.map(row => row.map(square => ({ ...square })));
 
                         // Remove the opponent piece
@@ -101,7 +106,7 @@ export default function Square(props: { id: string, color: string, onClick: Func
                         dispatch(updateBoard(updatedBoardState));
                         dispatch(clearSquareSelections());
 
-                        alert("Move and capture completed successfully.");
+                        dispatch(updateMessage("Move and capture completed successfully."));
                     } else {
                         // If no capture is possible, check if it is a valid forward move
                         if (piece.type === "man" && isSingleSquareMove(fromSqrOnBoard, toSqrOnBoard)) {
@@ -121,7 +126,7 @@ export default function Square(props: { id: string, color: string, onClick: Func
                             dispatch(updateBoard(updatedBoardState));
                             dispatch(clearSquareSelections());
 
-                            alert("Move completed successfully.");
+                            dispatch(updateMessage("Move completed successfully."));
                         } else if (piece.type === "king") {
                             // Handle king's movement (can move diagonally in any direction, single square)
                             let updatedBoardState: BoardStateType = board.map(row => row.map(square => ({ ...square })));
@@ -136,7 +141,7 @@ export default function Square(props: { id: string, color: string, onClick: Func
                             dispatch(updateBoard(updatedBoardState));
                             dispatch(clearSquareSelections());
 
-                            alert("King's move completed successfully.");
+                            dispatch(updateMessage("King's move completed successfully."));
                         } else {
                             alert("Invalid move. Capture is required if available.");
                             dispatch(clearSquareSelections());
