@@ -1,5 +1,5 @@
 import Square from "../ui-elements/square"
-import { sqrColor1, sqrColor2, boardSquareConfigCount, pieceColor1, pieceColor2 } from "@/contants"
+import { sqrColor1, sqrColor2, boardSquareConfigCount, pieceColor1, pieceColor2, player1Id, player2Id } from "@/contants"
 import { partialInitialBoardState } from "@/state/board_state"
 import SquareType from "@/types/square_type"
 import PieceType from "@/types/piece_type"
@@ -28,7 +28,8 @@ export function generateInitialBoardState(): BoardStateType {
             if (currentSquarePlayable) {
                 let piece: PieceType = {
                     type: "man",
-                    color: pieceColor1
+                    color: pieceColor1,
+                    playerId: player1Id
                 }
 
                 square.playable = true
@@ -39,6 +40,7 @@ export function generateInitialBoardState(): BoardStateType {
                     square.occupied = true
                     if (row > last - rowsWithPieces) {
                         piece.color = pieceColor2
+                        piece.playerId = player2Id
                     }
                 }
 
