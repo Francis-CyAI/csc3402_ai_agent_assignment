@@ -1,9 +1,10 @@
 // import Image from "next/image";
 import Board from "@/ui-elements/board";
+import StartGame from "@/ui-elements/start_game";
 
 export default function Home() {
   return (
-    <Board />
+    <StartGame />
   );
 }
 
