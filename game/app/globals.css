@@ -100,6 +100,8 @@ body {
 }
 
 .space-small {
+  width: 1px;
+  height: 1px;
   margin: 5px 0 5px 0;
 }
 
