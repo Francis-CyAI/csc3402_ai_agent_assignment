@@ -33,9 +33,11 @@ export function generateInitialBoardState(): BoardStateType {
 
                 square.playable = true
 
-                if (row < 3 || row > last - 3) {
+                let rowsWithPieces = 4
+
+                if (row < rowsWithPieces || row > last - rowsWithPieces) {
                     square.occupied = true
-                    if (row > last - 3) {
+                    if (row > last - rowsWithPieces) {
                         piece.color = pieceColor2
                     }
                 }
