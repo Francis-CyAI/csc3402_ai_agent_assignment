@@ -33,23 +33,23 @@ export default function StartGame() {
             <div className="text-center">
                 <h1 className="text-5xl font-bold text-white mb-8">Enter Players' Names</h1>
 
-                <div className="mb-4">
+                <div className="mb-4 p-2">
                     <input
                         type="text"
                         placeholder="Player 1 Name"
                         value={player1Name}
                         onChange={(e) => setPlayer1Name(e.target.value)}
-                        className="px-4 py-2 w-64 text-lg rounded-md border border-gray-300"
+                        className="px-4 py-2 w-64 text-lg rounded-md border border-gray-300 text-black"
                     />
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-4 p-2">
                     <input
                         type="text"
                         placeholder="Player 2 Name"
                         value={player2Name}
                         onChange={(e) => setPlayer2Name(e.target.value)}
-                        className="px-4 py-2 w-64 text-lg rounded-md border border-gray-300"
+                        className="px-4 py-2 w-64 text-lg rounded-md border border-gray-300 text-black"
                     />
                 </div>
 
