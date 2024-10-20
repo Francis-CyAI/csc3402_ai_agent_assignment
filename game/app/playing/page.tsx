@@ -1,5 +1,6 @@
 import Board from "@/ui-elements/board";
 import InfoBar from "@/ui-elements/game_info/info_bar";
+import DataSetLogger from "@/ui-elements/data_set_logger";
 
 export default function PlayingPage() {
     return (
@@ -10,6 +11,7 @@ export default function PlayingPage() {
             <div className="flex items-center justify-center h-screen bg-gray-800 mt-36">
                 <Board />
             </div>
+            <DataSetLogger />
         </>
     );
 }
