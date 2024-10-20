@@ -11,7 +11,7 @@ import { isDiagonalMove, isForwardMove, isSingleSquareMove, isValidCaptureMove, 
 import { player1Id, player2Id, boardSquareConfigCount } from "@/contants";
 // import { RootState } from "@/redux/store"; // Ensure you import the correct RootState type
 import { updateMessage } from "@/redux/messageSlice";
-import { switchTurn } from "@/redux/playersSlice";
+import { switchTurn, updateScore } from "@/redux/playersSlice";
 
 
 export default function Square(props: { id: string, color: string, onClick: Function, initialState: SquareType, keyValue: number }) {
@@ -21,7 +21,8 @@ export default function Square(props: { id: string, color: string, onClick: Func
     const dispatch = useDispatch();
 
     let playersList = playersState.players
-    let currentPlayerName: string = playersList[playersState.currentPlayerIndex].playerName
+    let currentPlayer = playersList[playersState.currentPlayerIndex]
+    let currentPlayerName: string = currentPlayer.playerName
 
     let keyValue = props.keyValue ?? 0;
     let pieceInfo: PieceType = props.initialState.piece as PieceType;
@@ -114,6 +115,8 @@ export default function Square(props: { id: string, color: string, onClick: Func
                         dispatch(clearSquareSelections());
 
                         dispatch(updateMessage("Move and capture completed successfully."));
+                        let currentPlayerId = currentPlayer.playerId
+                        dispatch(updateScore({ playerId: currentPlayerId, increment: 1}))
                         dispatch(switchTurn())
                     } else {
                         // If no capture is possible, check if it is a valid forward move
