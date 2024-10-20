@@ -64,8 +64,14 @@ export default function Square(props: { id: string, color: string, onClick: Func
                     }
 
                     // Check if the destination square is valid (not occupied and playable)
-                    if (!toSqrOnBoard.playable || toSqrOnBoard.occupied) {
-                        alert("Invalid move. The destination square is either occupied or not playable.");
+                    if (!toSqrOnBoard.playable) {
+                        alert("Invalid move. Destinations square is not playable.");
+                        dispatch(clearSquareSelections());
+                        return;
+                    }
+
+                    if (toSqrOnBoard.occupied) {
+                        alert("Invalid move. Destinations square is already occupied.");
                         dispatch(clearSquareSelections());
                         return;
                     }
