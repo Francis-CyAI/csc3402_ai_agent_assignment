@@ -213,9 +213,16 @@ class Checkers {
 		}
 
 		function hasMoves(pieceId) {
-			var arrayMoves = moves(pieceId);
-			if (arrayMoves.length === 4) {
-				return false;
+			var pieceMoves = moves(pieceId);
+			if (pieceMoves.length === 4) {
+				if (	pieceMoves.includes("tl1") || 
+						pieceMoves.includes("tr1") || 
+						pieceMoves.includes("br1") || 
+						pieceMoves.includes("bl1") 	) {
+					return true;
+				} else {
+					return false;
+				}
 			} else {
 				return true;
 			}
@@ -345,12 +352,22 @@ class Checkers {
 							}
 							
 						} else if (((si11 * si11) + si22) <= 12) {
-							push_squareId();
+							if (pieceType === "manBlack") {//manBlack restrictioon
+								push_xx0();
+								continue;  //To next diagonal
+							} else {
+								push_squareId();
+							}
 						} else if (((si11 * si11) + si22) <= 16) {
 							push_xx0();
 							continue;  //To next diagonal
 						} else if (((si11 * si11) + si22) === 21) {
-							push_squareId();
+							if (pieceType === "manBlack") {//manBlack restrictioon
+								push_xx0();
+								continue;  //To next diagonal
+							} else {
+								push_squareId();
+							}
 						}
 						manRestriction = manRestriction + 1;
 					//XXX: END OF => Top-left diagonal
@@ -411,12 +428,22 @@ class Checkers {
 							}
 							
 						} else if (((si11 * si11) + si22) <= 12) {
-							push_squareId();
+							if (pieceType === "manBlack") {//manBlack restrictioon
+								push_xx0();
+								continue;  //To next diagonal
+							} else {
+								push_squareId();
+							}
 						} else if (((si11 * si11) + si22) <= 16) {
 							push_xx0();
 							continue;  //To next diagonal
 						} else if (((si11 * si11) + si22) === 21) {
-							push_squareId();
+							if (pieceType === "manBlack") {//manBlack restrictioon
+								push_xx0();
+								continue;  //To next diagonal
+							} else {
+								push_squareId();
+							}
 						}
 						manRestriction = manRestriction + 1;
 					//XXX: END OF => Top-right diagonal
@@ -477,12 +504,22 @@ class Checkers {
 							}
 							
 						} else if (((si11 * si11) + si22) <= 12) {
-							push_squareId();
+							if (pieceType === "manWhite") {//manWhite restrictioon
+								push_xx0();
+								continue;  //To next diagonal
+							} else {
+								push_squareId();
+							}
 						} else if (((si11 * si11) + si22) <= 16) {
 							push_xx0();
 							continue;  //To next diagonal
 						} else if (((si11 * si11) + si22) === 21) {
-							push_squareId();
+							if (pieceType === "manWhite") {//manWhite restrictioon
+								push_xx0();
+								continue;  //To next diagonal
+							} else {
+								push_squareId();
+							}
 						}
 						manRestriction = manRestriction + 1;
 					//XXX: END OF => Bottom-right diagonal
@@ -543,12 +580,22 @@ class Checkers {
 							}
 							
 						} else if (((si11 * si11) + si22) <= 12) {
-							push_squareId();
+							if (pieceType === "manWhite") {//manWhite restrictioon
+								push_xx0();
+								continue;  //To next diagonal
+							} else {
+								push_squareId();
+							}
 						} else if (((si11 * si11) + si22) <= 16) {
 							push_xx0();
 							continue;  //To next diagonal
 						} else if (((si11 * si11) + si22) === 21) {
-							push_squareId();
+							if (pieceType === "manWhite") {//manWhite restrictioon
+								push_xx0();
+								continue;  //To next diagonal
+							} else {
+								push_squareId();
+							}
 						}
 						manRestriction = manRestriction + 1;
 					//XXX: END OF => Bottom-left diagonal
