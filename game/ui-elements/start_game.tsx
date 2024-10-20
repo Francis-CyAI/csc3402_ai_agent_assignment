@@ -53,7 +53,7 @@ export default function StartGame() {
                     />
                 </div>
 
-                {error && <p className="text-red-500 mb-4">{error}</p>}
+                {error && <p className="text-red mb-4">{error}</p>}
 
                 <button
                     onClick={handleStart}

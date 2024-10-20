@@ -89,16 +89,26 @@ body {
   height: fit-content;
 }
 
+.pv-4 {
+  padding: 4px 0 4px 0;
+}
+
 .square, .piece, .piece-title {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.space-small {
+  margin: 5px 0 5px 0;
+}
+
 .text-white {
   color: white;
 }
-
 .text-black {
   color: black;
+}
+.text-red {
+  color: red;
 }
