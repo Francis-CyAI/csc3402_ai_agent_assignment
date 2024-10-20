@@ -11,6 +11,7 @@ import { isDiagonalMove, isForwardMove, isSingleSquareMove, isValidCaptureMove, 
 import { player1Id, player2Id, boardSquareConfigCount } from "@/contants";
 // import { RootState } from "@/redux/store"; // Ensure you import the correct RootState type
 import { updateMessage } from "@/redux/messageSlice";
+import { switchTurn } from "@/redux/playersSlice";
 
 
 export default function Square(props: { id: string, color: string, onClick: Function, initialState: SquareType, keyValue: number }) {
@@ -107,6 +108,7 @@ export default function Square(props: { id: string, color: string, onClick: Func
                         dispatch(clearSquareSelections());
 
                         dispatch(updateMessage("Move and capture completed successfully."));
+                        dispatch(switchTurn())
                     } else {
                         // If no capture is possible, check if it is a valid forward move
                         if (piece.type === "man" && isSingleSquareMove(fromSqrOnBoard, toSqrOnBoard)) {
@@ -127,6 +129,7 @@ export default function Square(props: { id: string, color: string, onClick: Func
                             dispatch(clearSquareSelections());
 
                             dispatch(updateMessage("Move completed successfully."));
+                            dispatch(switchTurn())
                         } else if (piece.type === "king") {
                             // Handle king's movement (can move diagonally in any direction, single square)
                             let updatedBoardState: BoardStateType = board.map(row => row.map(square => ({ ...square })));
@@ -142,6 +145,7 @@ export default function Square(props: { id: string, color: string, onClick: Func
                             dispatch(clearSquareSelections());
 
                             dispatch(updateMessage("King's move completed successfully."));
+                            dispatch(switchTurn())
                         } else {
                             alert("Invalid move. Capture is required if available.");
                             dispatch(clearSquareSelections());
