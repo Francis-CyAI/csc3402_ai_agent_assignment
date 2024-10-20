@@ -4,7 +4,7 @@ import MessageBoard from "./message_board";
 
 export default function InfoBar() {
     return(
-        <div className="pv-4">
+        <div className="pv-4 info-bar">
             <div className="space-small"></div>
             <ScoreBoard />
             <div className="space-small"></div>

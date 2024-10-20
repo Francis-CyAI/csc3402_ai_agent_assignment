@@ -4,7 +4,7 @@ import InfoBar from "@/ui-elements/game_info/info_bar";
 export default function PlayingPage() {
     return (
         <>
-            <div className="flex items-center justify-center w-screen h-20 p-2">
+            <div className="flex items-center justify-center w-screen h-fit pv-4 sticky-top bg-blur">
                 <InfoBar />
             </div>
             <div className="flex items-center justify-center h-screen bg-gray-800 mt-36">

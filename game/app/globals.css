@@ -46,9 +46,20 @@ body {
   background-color: blue;
 }
 
+.bg-blur {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
 
 .board {
   padding: 16px;
+}
+
+.info-bar {
+  width: fit-content;
+  height: fit-content;
+  background-color: #17171770;
+  padding: 4px 8px;
 }
 
 .screen-header {
@@ -103,6 +114,11 @@ body {
   width: 1px;
   height: 1px;
   margin: 5px 0 5px 0;
+}
+
+.sticky-top {
+  position: sticky;
+  top: 0;
 }
 
 .text-white {
